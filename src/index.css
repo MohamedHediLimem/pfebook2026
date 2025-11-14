@@ -1,0 +1,481 @@
+/* Tailwind entry points */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Optional Google font */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
+
+:root{
+  --pura: #0b4fc6;
+  --pura-dark: #053a9a;
+  --muted: #6b7280;
+  --glass-bg: rgba(255,255,255,0.55);
+  --card-shadow: 0 6px 18px rgba(8,15,52,0.06);
+  --radius-lg: 1rem;
+}
+
+html,body,#root{height:100%}
+body{
+  font-family: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  color: #0f172a;
+  background: #fbfdff;
+  line-height: 1.45;
+}
+
+/* small base overrides */
+@layer base {
+  a { color: var(--pura); }
+}
+
+/* components */
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center px-4 py-2 rounded-lg font-semibold shadow-md;
+    background-color: var(--pura);
+    color: white;
+  }
+  .btn-glass {
+    @apply inline-flex items-center justify-center px-4 py-2 rounded-lg border;
+    background: linear-gradient(180deg, rgba(255,255,255,0.62), rgba(255,255,255,0.42));
+    backdrop-filter: blur(6px);
+  }
+  .card { border-radius: var(--radius-lg); box-shadow: var(--card-shadow); background: white; }
+}
+
+/* helpers */
+.glass {
+  background: linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.4));
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border-radius: 0.75rem;
+  border: 1px solid rgba(255,255,255,0.32);
+}
+/* Cacher le header */
+header {
+  display: none;
+}
+
+.bg-pura { background-color: var(--pura) !important; }
+.text-pura { color: var(--pura) !important; }
+/* glass styles - add below your tailwind directives */
+.glass-surface {
+  background: linear-gradient(180deg, rgba(255,255,255,0.65), rgba(246,246,248,0.55));
+  border: 1px solid rgba(255,255,255,0.5);
+  border-left: 1px solid rgba(255,255,255,0.6);
+  border-radius: 28px;
+  backdrop-filter: blur(12px) saturate(120%);
+  -webkit-backdrop-filter: blur(12px) saturate(120%);
+  box-shadow:
+    0 10px 30px rgba(15,23,42,0.06), /* drop shadow */
+    inset 0 6px 16px rgba(255,255,255,0.6), /* soft inner highlight */
+    inset 0 -8px 18px rgba(0,0,0,0.04); /* subtle inner depth */
+  overflow: hidden;
+}
+
+/* decorative blobs and accents */
+.blob {
+  background: linear-gradient(90deg, rgba(11,79,198,0.12), rgba(3,122,255,0.12));
+  transform: rotate(-8deg);
+  filter: blur(6px);
+  box-shadow: 0 10px 30px rgba(3,122,255,0.08);
+}
+
+/* small colored circular accent */
+.accent-blob {
+  background: linear-gradient(135deg, #ffd27d, #a6e3ff);
+  box-shadow: 0 8px 20px rgba(166,227,255,0.12);
+  border-radius: 999px;
+  opacity: 0.95;
+}
+
+/* extra inner highlight to emulate carved glass recess */
+.shadow-inner-overlay {
+  background: rgba(255,255,255,0.7);
+  box-shadow: inset 0 14px 30px rgba(0,0,0,0.04);
+  transform: translateY(2px);
+  opacity: 0.85;
+}
+
+/* glass button styling */
+.glass-button {
+  background: linear-gradient(180deg, rgba(255,255,255,0.14), rgba(255,255,255,0.06));
+  border: 1px solid rgba(255,255,255,0.36);
+  border-radius: 999px;
+  padding-left: 18px;
+  padding-right: 18px;
+  backdrop-filter: blur(6px) saturate(120%);
+  -webkit-backdrop-filter: blur(6px) saturate(120%);
+  box-shadow:
+    0 8px 20px rgba(11,79,198,0.08),
+    inset 0 2px 8px rgba(255,255,255,0.45);
+  color: #fff;
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+.glass-button:hover { transform: translateY(-3px); box-shadow: 0 18px 36px rgba(11,79,198,0.12); }
+
+/* responsive tweak if needed */
+@media (min-width: 768px) {
+  .glass-surface { border-radius: 36px; }
+}
+/* --- Keep this below the Tailwind directives --- */
+
+/* wrapper that helps keep the slanted panel centered and clipped */
+.slanted-wrap {
+  width: 780px;               /* adjust the width to match visual */
+  height: 460px;              /* panel height */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: translateZ(0);   /* force GPU for smoother transforms */
+  pointer-events: none;       /* let internal controls selectively re-enable */
+}
+
+/* slanted panel - rotated rectangle with glass effect */
+.slanted-panel {
+  pointer-events: auto;
+  width: 820px;
+  height: 460px;
+  position: relative;
+  transform: rotate(-14deg); /* slanted look; change angle if you want */
+  border-radius: 18px;
+  overflow: hidden;
+
+  /* glass look */
+  background: linear-gradient(180deg, rgba(10,57,157,0.95), rgba(11,79,198,0.95));
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow:
+    0 30px 60px rgba(4,10,25,0.30),           /* large drop shadow */
+    inset 0 6px 20px rgba(255,255,255,0.04),  /* subtle inner highlight */
+    0 6px 18px rgba(11,79,198,0.08);
+  backdrop-filter: blur(8px) saturate(120%);
+  -webkit-backdrop-filter: blur(8px) saturate(120%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 56px;
+}
+
+/* decorative huge quote marks in the background of the slanted panel */
+.slanted-panel .quote-mark {
+  position: absolute;
+  top: 36px;
+  left: 80px;
+  font-size: 120px;
+  font-weight: 800;
+  color: rgba(255,255,255,0.12);
+  line-height: 1;
+  user-select: none;
+  pointer-events: none;
+}
+
+/* content (keeps text readable - counter rotates the inner box to be horizontal) */
+.slanted-panel .content {
+  transform: rotate(14deg); /* counter the outer rotate so text is horizontal */
+  max-width: 520px;
+  color: white;
+}
+
+/* CALLOUT: if you want the content left-aligned similar to screenshot, keep the rotate and positioning.
+   Adjust max-width / padding to taste. */
+
+/* glass button (reuse from earlier) */
+.glass-button {
+  background: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.06));
+  border: 1px solid rgba(255,255,255,0.22);
+  border-radius: 999px;
+  padding: 10px 20px;
+  backdrop-filter: blur(6px) saturate(140%);
+  -webkit-backdrop-filter: blur(6px) saturate(140%);
+  box-shadow:
+    0 10px 30px rgba(11,79,198,0.12),
+    inset 0 2px 8px rgba(255,255,255,0.3);
+  color: #fff;
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+.glass-button:hover { transform: translateY(-3px); box-shadow: 0 18px 36px rgba(11,79,198,0.16); }
+
+/* --- Liquid decorative blobs inside the panel --- */
+.blob {
+  position: absolute;
+  border-radius: 999px;
+  filter: blur(18px);
+  opacity: 0.9;
+}
+
+/* left soft bluish blob */
+.blob-1 {
+  width: 260px;
+  height: 160px;
+  left: -40px;
+  top: 40px;
+  background: radial-gradient(closest-side, rgba(10,120,255,0.18), rgba(10,120,255,0.04));
+  transform: rotate(-6deg);
+  mix-blend-mode: screen;
+}
+
+/* top-right warm accent */
+.blob-2 {
+  width: 140px;
+  height: 140px;
+  right: 36px;
+  top: 28px;
+  background: radial-gradient(closest-side, rgba(255,220,120,0.16), rgba(255,220,120,0.02));
+  mix-blend-mode: screen;
+}
+
+/* lower translucent highlight */
+.blob-3 {
+  width: 300px;
+  height: 120px;
+  left: 40px;
+  bottom: -10px;
+  background: linear-gradient(90deg, rgba(255,255,255,0.16), rgba(255,255,255,0.02));
+  transform: rotate(6deg);
+  opacity: 0.7;
+}
+
+/* responsive adjustments */
+@media (max-width: 1100px) {
+  .slanted-wrap {
+    width: 92%;
+    height: 420px;
+  }
+  .slanted-panel {
+    width: calc(100% + 60px);
+    height: 420px;
+    transform: rotate(-12deg);
+    padding: 40px;
+  }
+  .slanted-panel .quote-mark { font-size: 86px; left: 36px; top: 18px; }
+  .slanted-panel .content { transform: rotate(12deg); }
+}
+
+@media (max-width: 720px) {
+  /* on very small screens we remove rotate and use a simple stacked layout */
+  .slanted-wrap { width: 100%; height: auto; padding: 28px 12px; }
+  .slanted-panel { transform: rotate(0deg); width: 100%; height: auto; border-radius: 16px; padding: 28px; }
+  .slanted-panel .content { transform: rotate(0deg); }
+  .slanted-panel .quote-mark { display: none; }
+  .blob { display: none; }
+}
+/* --- Full-section glass background + liquid accents --- */
+
+.glass-section {
+  /* full-width glass surface (keeps the card color effect but covers entire section) */
+  background: linear-gradient(180deg, rgba(10,55,150,0.98), rgba(11,79,198,0.98));
+  border: 1px solid rgba(255,255,255,0.04);
+  box-shadow:
+    0 40px 90px rgba(2,6,23,0.34),         /* large soft drop shadow under the whole section */
+    inset 0 10px 30px rgba(255,255,255,0.02), /* subtle inner highlight */
+    inset 0 -12px 28px rgba(0,0,0,0.06);    /* subtle inner lowlight for depth */
+  backdrop-filter: blur(6px) saturate(120%);
+  -webkit-backdrop-filter: blur(6px) saturate(120%);
+  border-radius: 12px;    /* slight rounding on edges */
+  /* make sure it visually covers the section */
+  will-change: transform, opacity;
+}
+
+/* faint vignette to bring depth similar to your reference */
+.glass-vignette {
+  background: radial-gradient(60% 60% at 12% 20%, rgba(255,255,255,0.02), rgba(0,0,0,0.06));
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+
+/* large decorative quotes that are part of the section background (unrotated) */
+.quote-mark-large {
+  position: absolute;
+  top: 40px;
+  left: 40px;
+  font-size: 96px;
+  font-weight: 800;
+  color: rgba(255,255,255,0.08);
+  line-height: 0.9;
+  user-select: none;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* CTA glass button (keeps previous styling) */
+.glass-button {
+  background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+  border: 1px solid rgba(255,255,255,0.14);
+  padding: 10px 18px;
+  border-radius: 999px;
+  backdrop-filter: blur(6px) saturate(140%);
+  -webkit-backdrop-filter: blur(6px) saturate(140%);
+  box-shadow:
+    0 10px 28px rgba(11,79,198,0.14),
+    inset 0 2px 6px rgba(255,255,255,0.12);
+  color: #fff;
+  transition: transform .16s ease, box-shadow .16s ease;
+}
+.glass-button:hover { transform: translateY(-3px); box-shadow: 0 18px 36px rgba(11,79,198,0.18); }
+
+/* Liquid/blurred decorative blobs (cover wide area so they feel like background) */
+.blob {
+  position: absolute;
+  border-radius: 999px;
+  filter: blur(20px);
+  mix-blend-mode: screen;
+  opacity: 0.92;
+  z-index: 0;
+}
+
+/* left bluish soft glow */
+.blob-1 {
+  width: 520px;
+  height: 220px;
+  left: -80px;
+  top: 120px;
+  background: radial-gradient(closest-side, rgba(20,140,255,0.16), rgba(20,140,255,0.02));
+}
+
+/* warm small accent top-right */
+.blob-2 {
+  width: 220px;
+  height: 220px;
+  right: 80px;
+  top: 40px;
+  background: radial-gradient(closest-side, rgba(255,220,120,0.12), rgba(255,220,120,0.01));
+  opacity: 0.9;
+}
+
+/* bottom soft highlight */
+.blob-3 {
+  width: 600px;
+  height: 180px;
+  left: 120px;
+  bottom: -40px;
+  background: linear-gradient(90deg, rgba(255,255,255,0.10), rgba(255,255,255,0.02));
+  opacity: 0.7;
+}
+
+/* Make sure the glass surface covers section edges on smaller screens */
+@media (max-width: 1100px) {
+  .glass-section { border-radius: 10px; box-shadow: 0 30px 70px rgba(2,6,23,0.30); }
+  .quote-mark-large { font-size: 74px; left: 24px; top: 24px; }
+  .blob-1 { left: -40px; width: 420px; height: 180px; top: 90px; }
+  .blob-3 { left: 60px; width: 480px; }
+}
+
+@media (max-width: 720px) {
+  /* simpler, readable mobile view */
+  .quote-mark-large { display: none; }
+  .blob { display: none; }
+  .glass-section { border-radius: 0; box-shadow: none; }
+  .glass-vignette { display: none; }
+}
+/* Soft frosted tag */
+.glass-tag {
+  background: rgba(11,79,198,0.06);
+  border: 1px solid rgba(11,79,198,0.12);
+  backdrop-filter: blur(4px);
+}
+
+/* Stats */
+.stat-item {
+  text-align: left;
+}
+.stat-number {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #0b4fc6;
+}
+.stat-label {
+  font-size: 0.75rem;
+  color: #6b7280;
+}
+
+/* Vision / Culture cards */
+.info-card {
+  padding: 18px;
+  border-radius: 14px;
+  background: rgba(255,255,255,0.6);
+  border: 1px solid rgba(0,0,0,0.04);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.04);
+  backdrop-filter: blur(4px);
+}
+/* Micro-animation helpers */
+.transition-transform { transition-property: transform, opacity; }
+
+/* glass-tag: subtle pill */
+.glass-tag {
+  background: rgba(11,79,198,0.06);
+  border: 1px solid rgba(11,79,198,0.12);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+/* Stats */
+.stat-item { text-align: left; }
+.stat-number {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #0b4fc6;
+  line-height: 1;
+}
+.stat-label {
+  font-size: 0.75rem;
+  color: #6b7280;
+}
+
+/* Info cards */
+.info-card {
+  padding: 18px;
+  border-radius: 12px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.92), rgba(255,255,255,0.94));
+  border: 1px solid rgba(0,0,0,0.04);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.04);
+}
+
+/* Small responsive tweaks so animations look smooth on mobile */
+@media (max-width: 720px) {
+  .stat-number { font-size: 1.25rem; }
+  .info-card { padding: 14px; border-radius: 10px; }
+}
+
+/* Optional: reduce motion for users who prefer reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .transition-transform { transition: none !important; }
+}
+.stat-plus {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #0b4fc6;
+  line-height: 1;
+}
+/* Subtle frosted tag used in headings */
+.glass-tag {
+  background: rgba(11,79,198,0.06);
+  border: 1px solid rgba(11,79,198,0.12);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+/* Glass card look for project tiles */
+.glass-card {
+  background: linear-gradient(180deg, rgba(255,255,255,0.85), rgba(250,250,252,0.85));
+  border: 1px solid rgba(11,79,198,0.06);
+  box-shadow: 0 14px 40px rgba(2,6,23,0.06), inset 0 4px 12px rgba(255,255,255,0.6);
+  backdrop-filter: blur(6px) saturate(120%);
+  -webkit-backdrop-filter: blur(6px) saturate(120%);
+}
+
+/* small highlight for highlighted search terms */
+mark {
+  background: rgba(250,232,151,0.9);
+  padding: 0 2px;
+  border-radius: 4px;
+  color: #7a4f00;
+}
+
+/* focus ring for keyboard users */
+.glass-card:focus {
+  box-shadow: 0 18px 48px rgba(11,79,198,0.12), 0 0 0 4px rgba(11,79,198,0.12);
+}
+
+/* responsive tweaks */
+@media (max-width: 768px) {
+  .glass-card { padding: 16px; }
+}
