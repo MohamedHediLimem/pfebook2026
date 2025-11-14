@@ -77,7 +77,7 @@ export default function Hero() {
               Internship Catalog
             </h1>
             <p className="text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-bold bg-gradient-to-r from-blue-600 to-blue-500 bg-clip-text text-transparent">
-              2026
+              2027
             </p>
           </div>
           <span><div className="space-y-4 md:space-y-6">
