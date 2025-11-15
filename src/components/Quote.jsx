@@ -34,14 +34,32 @@ export default function Quote({ bgAccent = null }) {
           <div className="mt-6 text-white/80">— Pura Solutions</div>
 
           <div className="mt-8">
-            <button className="glass-button inline-flex items-center gap-3 px-6 py-3 rounded-full">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
-                <path d="M12 5v14" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                <path d="M5 12l7-7 7 7" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-              <span className="text-sm font-medium text-white">Apply Now</span>
-            </button>
-          </div>
+  <a
+    href="https://forms.gle/GxK7AeTZRGNw1NSV7"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="glass-button inline-flex items-center gap-3 px-6 py-3 rounded-full"
+  >
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
+      <path
+        d="M12 5v14"
+        stroke="white"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M5 12l7-7 7 7"
+        stroke="white"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+    <span className="text-sm font-medium text-white">Apply Now</span>
+  </a>
+</div>
+
         </div>
       </div>
 

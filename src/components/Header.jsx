@@ -14,7 +14,15 @@ export default function Header({ onNavClick }) {
           <button onClick={() => onNavClick('catalog')} className="hover:text-pura-dark">Catalog</button>
           <button onClick={() => onNavClick('about')} className="hover:text-pura-dark">About</button>
           <button onClick={() => onNavClick('projects')} className="hover:text-pura-dark">Projects</button>
-          <a href="#apply" className="ml-4 inline-block px-4 py-2 bg-pura text-white rounded-lg shadow">Apply</a>
+        <a
+  href="https://forms.gle/GxK7AeTZRGNw1NSV7"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="px-3 py-2 border rounded text-sm"
+>
+  Apply
+</a>
+
         </nav>
         <div className="md:hidden">
           <button className="px-3 py-2 rounded bg-slate-100">Menu</button>

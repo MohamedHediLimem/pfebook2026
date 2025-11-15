@@ -11,7 +11,7 @@ const SAMPLE_INTERNSHIPS = [
     level: "Engineering",
     tags: ["Flutter","NestJS","Microservices","gRPC","MongoDB","Firebase","Security","OAuth2","GDPR","HIPAA"],
     excerpt: "Develop a cross-platform Flutter mobile app for medical tourism with real-time features, backend sync, and secure data handling.",
-    description: "Extend the existing medical tourism platform by developing a fully functional Flutter mobile application. Key objectives include: secure authentication (JWT/OAuth2), real-time notifications (FCM), encrypted communication, appointment scheduling, online payments, medical record access, and multilingual UX. Ensure API integration with NestJS microservices using REST/gRPC, guarantee GDPR/HIPAA compliance, and deliver a production-ready Android/iOS app."
+    description: "Extend the existing medical tourism platform by developing a fully functional Flutter mobile application.Key objectives include: secure authentication (JWT/OAuth2), real-time notifications (FCM), encrypted communication, appointment scheduling, online payments, medical record access, and multilingual UX. Ensure API integration with NestJS microservices using REST/gRPC, guarantee GDPR/HIPAA compliance, and deliver a production-ready Android/iOS app."
   },
 
   {
@@ -199,6 +199,21 @@ const SAMPLE_INTERNSHIPS = [
     excerpt: "Develop core Qurelio features such as document control, audit workflows, KPI dashboards, and permission systems.",
     description: "Build frontend and backend features for Qurelio: document and version control, audit execution, CAPA workflows, dashboards, ISO templates, and role-based permissions."
   }
+   ,{
+    id: "PFE-26-BIO1",
+    title: "Biomedical Engineering Internship: Support for Medical Device Development",
+    company: "Pura Solutions",
+    domain: "Biomedical Engineering",
+    subdomain: "Biomedical Engineering",
+    location: "On Site",
+    duration: "4–6 months",
+    level: "Engineering/Master",
+    tags: ["Medical Devices","ISO 13485","Testing","Design","Technical Documentation"],
+    excerpt: "Assist in design and testing of medical device prototypes, ensure regulatory compliance and support documentation.",    
+    description: 'Support the biomedical engineering team in designing, prototyping, and testing medical devices. Assist with regulatory compliance (ISO 13485), risk assessments, usability testing, and creating technical documentation for device development.'
+
+}
+
 ];
 
 export default SAMPLE_INTERNSHIPS;

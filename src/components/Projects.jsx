@@ -145,10 +145,7 @@ export default function Projects({ internships = [], onOpen }) {
             >
               <div className="items-start justify-between gap-4">
                  
-                <div className="text-xs px-2 py-1 rounded-md bg-white/10 text-white">
-  {i.subdomain ? i.subdomain : i.domain}
-</div>
-
+                <div className="text-xs px-2 py-1 rounded-md bg-gray/10 text-black">{i.domain}</div>
                  <div className="flex-1">
                   <h4 id={`proj-${i.id}-title`} className="font-semibold text-lg text-slate-900">
                     <Highlight text={i.title} />
@@ -181,7 +178,7 @@ export default function Projects({ internships = [], onOpen }) {
                       Details
                     </button>
                     <a
-  href="https://forms.gle/CcwWpzn2ZvmmL42F7"
+  href="https://forms.gle/GxK7AeTZRGNw1NSV7"
   target="_blank"
   rel="noopener noreferrer"
   className="px-3 py-2 border rounded text-sm"
