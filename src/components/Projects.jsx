@@ -1,12 +1,12 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 
 /**
- * Projects section — improved UX + style
+ * Projects - Fixed, uniform cards with Apple-like glass look
  * Props:
- *  - internships: array of project objects (same shape you used)
+ *  - internships: array of project objects
  *  - onOpen: function(project) to open details
  */
-export default function Projects({ internships = [], onOpen }) {
+export default function ProjectsFixed({ internships = [], onOpen = () => {} }) {
   // UI state
   const [queryRaw, setQueryRaw] = useState("");
   const [query, setQuery] = useState("");
@@ -20,14 +20,14 @@ export default function Projects({ internships = [], onOpen }) {
 
   // derive domains
   const domains = useMemo(
-    () => ["All", ...Array.from(new Set(internships.map((i) => i.domain || "Other")))],
+    () => ["All", ...Array.from(new Set((internships || []).map((i) => i.domain || "Other")))],
     [internships]
   );
 
   // filtered results (memoized)
   const filtered = useMemo(() => {
     const q = query.toLowerCase();
-    return internships.filter((i) => {
+    return (internships || []).filter((i) => {
       const hay = [i.title, i.company, (i.tags || []).join(" "), i.excerpt, i.location]
         .join(" ")
         .toLowerCase();
@@ -37,7 +37,7 @@ export default function Projects({ internships = [], onOpen }) {
     });
   }, [internships, query, filterDomain]);
 
-  // reveal-on-scroll for cards
+  // subtle reveal-on-scroll (optional)
   const containerRef = useRef(null);
   const [reveal, setReveal] = useState(false);
   useEffect(() => {
@@ -50,13 +50,13 @@ export default function Projects({ internships = [], onOpen }) {
           obs.disconnect();
         }
       },
-      { threshold: 0.12 }
+      { threshold: 0.06 }
     );
     obs.observe(el);
     return () => obs.disconnect();
   }, []);
 
-  // helper: highlight matching words
+  // highlight helper
   const Highlight = ({ text = "" }) => {
     if (!query) return <>{text}</>;
     const parts = [];
@@ -66,7 +66,11 @@ export default function Projects({ internships = [], onOpen }) {
     let idx = lower.indexOf(q, start);
     while (idx !== -1) {
       if (idx > start) parts.push(text.slice(start, idx));
-      parts.push(<mark key={idx} className="bg-yellow-100 text-yellow-800 px-[2px] rounded-sm">{text.slice(idx, idx + q.length)}</mark>);
+      parts.push(
+        <mark key={idx} className="bg-yellow-100 text-yellow-800 px-[2px] rounded-sm">
+          {text.slice(idx, idx + q.length)}
+        </mark>
+      );
       start = idx + q.length;
       idx = lower.indexOf(q, start);
     }
@@ -77,12 +81,11 @@ export default function Projects({ internships = [], onOpen }) {
   return (
     <section id="catalog" className="py-16">
       <div className="max-w-6xl mx-auto px-6">
-
-        {/* header */}
+        {/* Header */}
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <div>
             <h3 className="text-3xl font-extrabold">Internship Projects</h3>
-            <p className="text-slate-500 mt-2">Explore roles across IT, Quality Management, Business and Biomedical.</p>
+            <p className="text-slate-500 mt-2">Explore roles across IT, Business Management, Quality Management, and Biomedical Engineering.</p>
           </div>
 
           <div className="flex items-center gap-3">
@@ -90,7 +93,7 @@ export default function Projects({ internships = [], onOpen }) {
               {filtered.length} result{filtered.length !== 1 ? "s" : ""}
             </div>
 
-            {/* search */}
+            {/* Search */}
             <div className="flex items-center gap-2">
               <input
                 aria-label="Search roles, skills or companies"
@@ -99,8 +102,6 @@ export default function Projects({ internships = [], onOpen }) {
                 placeholder="Search roles, skills or companies"
                 className="px-4 py-2 border rounded-lg min-w-[220px] outline-none focus:ring-2 focus:ring-offset-1 focus:ring-pura"
               />
-
-              {/* domain select (hidden on wide screens; chips available below) */}
               <select
                 value={filterDomain}
                 onChange={(e) => setFilterDomain(e.target.value)}
@@ -108,21 +109,24 @@ export default function Projects({ internships = [], onOpen }) {
                 aria-label="Filter domain"
               >
                 {domains.map((d) => (
-                  <option key={d} value={d}>{d}</option>
+                  <option key={d} value={d}>
+                    {d}
+                  </option>
                 ))}
               </select>
             </div>
           </div>
         </div>
 
-        {/* domain chips (quick filters) */}
+        {/* Domain chips */}
         <div className="mt-4 flex gap-3 flex-wrap">
           {domains.map((d) => (
             <button
               key={d}
               onClick={() => setFilterDomain(d)}
-              className={`px-3 py-1 rounded-full text-sm border transition 
-                ${filterDomain === d ? "bg-pura text-white border-transparent" : "bg-white text-slate-600 border-slate-200"}`}
+              className={`px-3 py-1 rounded-full text-sm border transition ${
+                filterDomain === d ? "bg-pura text-white border-transparent" : "bg-white text-slate-600 border-slate-200"
+              }`}
               aria-pressed={filterDomain === d}
             >
               {d}
@@ -130,63 +134,87 @@ export default function Projects({ internships = [], onOpen }) {
           ))}
         </div>
 
-        {/* grid */}
-        <div ref={containerRef} className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+        {/* Grid */}
+        <div ref={containerRef} className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
           {filtered.map((i, idx) => (
             <article
               key={i.id}
               tabIndex={0}
               aria-labelledby={`proj-${i.id}-title`}
-              onKeyDown={(e) => { if (e.key === "Enter") onOpen(i); }}
-              className={`rounded-xl p-6 shadow-md glass-card focus:outline-none focus:ring-4 focus:ring-pura/30 cursor-pointer
-                transform transition-all duration-500 ${reveal ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}
-                hover:shadow-xl`}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") onOpen(i);
+              }}
+              className={`flex flex-col h-full rounded-xl p-6 glass-card focus:outline-none focus:ring-4 focus:ring-pura/30 transform transition-all duration-500 ${
+                reveal ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+              }`}
               style={{ transitionDelay: `${idx * 60}ms` }}
             >
-              <div className="items-start justify-between gap-4">
-                 
-                <div className="text-xs px-2 py-1 rounded-md bg-gray/10 text-black">{i.domain}</div>
-                 <div className="flex-1">
-                  <h4 id={`proj-${i.id}-title`} className="font-semibold text-lg text-slate-900">
-                    <Highlight text={i.title} />
-                  </h4>
-                  <div className="text-sm text-slate-500 mt-1">
-                    <Highlight text={`${i.company} • ${i.location || "Remote"}`} />
-                  </div>
-                </div>
-
+              {/* Top meta (domain and optional right-side small tag) */}
+              <div className="flex items-start justify-between gap-4">
+                <div className="text-xs py-1 font-bold rounded-md bg-gray/10 text-slate-700">{i.domain}</div>
+                {i.level && <div className="text-xs py-1 font-bold text-slate-400">{i.level}</div>}
               </div>
 
-              <p className="mt-3 text-slate-600 text-sm">
-                <Highlight text={i.excerpt || ""} />
-              </p>
-
-              <div className="mt-4 flex flex-wrap gap-2 items-center justify-between">
-                <div className="flex gap-2 flex-wrap">
-                  {(i.tags || []).slice(0, 6).map((t) => (
-                    <span key={t} className="text-xs px-2 py-1 bg-slate-100 rounded-full text-slate-700">{t}</span>
-                  ))}
+              {/* Body: title, company, description, tags */}
+              <div className="flex-1 flex flex-col mt-3">
+                <h4 id={`proj-${i.id}-id`} className="font-semibold text-lg bg-gradient-to-r from-blue-500 to-violet-600 bg-clip-text text-transparent leading-tight">
+                  <Highlight text={i.id} />
+                </h4>
+                <h4 id={`proj-${i.id}-title`} className="font-semibold text-lg text-slate-900 leading-tight">
+                  <Highlight text={i.title} />
+                </h4>
+                <div className="text-sm text-slate-500 mt-1">
+                  <Highlight text={` ${i.location || "Remote"}`} />
                 </div>
 
-                <div className="flex gap-2 items-center">
-                  <div className="text-sm text-slate-500 mr-2">{i.duration} • {i.level}</div>
-                  <div className="flex gap-2">
-                    <button
-                      onClick={() => onOpen(i)}
-                      className="px-3 py-2 bg-pura text-white rounded hover:opacity-95"
-                    >
-                      Details
-                    </button>
-                    <a
-  href="https://forms.gle/GxK7AeTZRGNw1NSV7"
-  target="_blank"
-  rel="noopener noreferrer"
-  className="px-3 py-2 border rounded text-sm"
->
-  Apply
-</a>
+                {/* description (clamped) */}
+                <p className="mt-4 text-slate-600 text-sm description">
+                  <Highlight text={i.excerpt || i.description || ""} />
+                </p>
 
+                {/* tags - fixed area */}
+                <div className="mt-4 tags-row">
+                  <div className="flex flex-wrap gap-2">
+                    {(i.tags || []).slice(0, 12).map((t) => (
+                      <span key={t} className="text-xs px-3 py-1 bg-slate-100 rounded-full text-slate-700">
+                        {t}
+                      </span>
+                    ))}
                   </div>
+                </div>
+              </div>
+
+              {/* Footer: meta + buttons (bottom aligned) */}
+              <div className="mt-6 pt-3 border-t border-transparent flex items-center justify-left gap-4">
+                <div className="text-sm text-slate-500">
+                    
+                </div>
+
+                <div className="flex items-center gap-3 flex-shrink-0">
+                  {/* Details - primary gradient button */}
+                  <button
+                    onClick={() => onOpen(i)}
+                    className="w-28 md:w-32 h-11 rounded-full inline-flex items-center justify-center text-white font-semibold shadow-md transform transition"
+                    style={{
+                      background: "linear-gradient(90deg,#3b82f6,#8b5cf6)",
+                      boxShadow: "0 8px 28px rgba(59,130,246,0.18)",
+                    }}
+                    aria-label={`Details for ${i.title}`}
+                  >
+                    Details
+                  </button>
+
+                  {/* Apply - secondary button with same size */}
+                  <a
+                    href="https://forms.gle/GxK7AeTZRGNw1NSV7"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-28 md:w-32 h-11 rounded-full inline-flex items-center justify-center bg-white border text-slate-900 font-medium shadow-sm"
+                    style={{ boxShadow: "0 6px 18px rgba(2,6,23,0.06)", borderColor: "rgba(15,23,42,0.06)" }}
+                    aria-label={`Apply to ${i.title}`}
+                  >
+                    Apply
+                  </a>
                 </div>
               </div>
             </article>
@@ -194,11 +222,45 @@ export default function Projects({ internships = [], onOpen }) {
         </div>
 
         {filtered.length === 0 && (
-          <div className="mt-8 text-slate-500">
-            No internships found. Try a different search or clear filters.
-          </div>
+          <div className="mt-8 text-slate-500">No internships found. Try a different search or clear filters.</div>
         )}
       </div>
+
+      {/* Local styles to enforce consistent heights, clamps, and glass look */}
+      <style>{`
+        /* description clamp to 3 lines and fixed height to preserve card consistency */
+        .description {
+          display: -webkit-box;
+          -webkit-line-clamp: 3;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+          min-height: 72px;   /* adjust if you want larger/smaller */
+          max-height: 72px;
+        }
+
+        /* tags area fixed height (prevents long tag lists from pushing footer) */
+        .tags-row {
+          min-height: 56px;   /* fits two rows; tweak if needed */
+          max-height: 56px;
+          overflow: hidden;
+        }
+
+        /* glass-card fallback style */
+        .glass-card {
+          background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(250,250,251,0.96));
+          backdrop-filter: blur(6px) saturate(120%);
+          -webkit-backdrop-filter: blur(6px) saturate(120%);
+          border: 1px solid rgba(15,23,42,0.04);
+          box-shadow: 0 10px 30px rgba(2,6,23,0.04);
+        }
+
+        /* responsiveness */
+        @media (max-width: 768px) {
+          .w-28 { width: 96px; }
+          .md\\:w-32 { width: 96px; }
+          .h-11 { height: 40px; }
+        }
+      `}</style>
     </section>
   );
 }

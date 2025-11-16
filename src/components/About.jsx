@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 
-export default function About({ img = "/assets/about.png" }) {
+export default function About({ img = "/assets/bg.png" }) {
   const containerRef = useRef(null);
   const [visible, setVisible] = useState(false);
 
@@ -68,86 +68,303 @@ export default function About({ img = "/assets/about.png" }) {
   }, [visible]);
 
   return (
-    <section id="about" className="relative py-24 bg-white">
+    <section 
+      id="about" 
+      className="relative py-24 overflow-hidden"
+    >
+      {/* Black and White Building Background Image */}
+      <div 
+        className="absolute inset-0 z-0"
+        style={{
+          backgroundImage: 'url(/src/assets/bg.png)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          filter: 'grayscale(100%)',
+        }}
+      />
+      
+      {/* Liquid Glass Overlay - Apple Style */}
+      
+
+      {/* Subtle gradient orb - very minimal */}
+      <div 
+        className="absolute top-20 right-10 w-[500px] h-[500px] rounded-full blur-[120px] opacity-15 pointer-events-none z-0"
+        style={{
+          background: 'radial-gradient(circle, rgba(56,189,248,0.12) 0%, transparent 70%)',
+        }}
+      />
+
       <div
         ref={containerRef}
-        className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-16 items-center"
+        className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-16 items-center relative z-10"
       >
 
         {/* LEFT CONTENT */}
         <div
           className={
-            "space-y-6 transition-transform duration-700 " +
+            "space-y-6 transition-all duration-700 " +
             (visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8")
           }
         >
-          <span className="inline-block px-4 py-1 rounded-full text-xs font-medium glass-tag text-slate-700">
+          {/* Tag with subtle glass effect */}
+          <span 
+            className="inline-block px-4 py-1.5 rounded-full text-xs font-medium text-slate-700"
+            style={{
+              background: 'rgba(255, 255, 255, 0.6)',
+              backdropFilter: 'blur(10px)',
+              border: '1px solid rgba(148, 163, 184, 0.2)',
+              boxShadow: '0 2px 8px rgba(0, 0, 0, 0.04)',
+            }}
+          >
             ABOUT PURA
           </span>
 
-          <h3 className="text-4xl md:text-5xl font-extrabold text-slate-900">
-            Pura <span className="text-pura">Solutions</span>
+          <h3 className="text-5xl md:text-6xl font-extrabold text-slate-900 leading-tight">
+            Pura  
+            <span className="bg-gradient-to-r from-blue-500 to-violet-600 bg-clip-text text-transparent">
+              {" "}Solutions
+            </span>
           </h3>
-
-          <p className="text-lg text-slate-600 max-w-xl">
+          <p 
+            className="text-lg text-slate-600 max-w-xl leading-relaxed"
+            style={{
+              fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif',
+            }}
+          >
             Founded in 2021, Pura Solutions merges technology with healthcare to build
             powerful software, AI systems, and smart products. We focus on innovation,
             teamwork, and delivering measurable impact.
           </p>
 
-          {/* NEW STATS */}
-          <div className="grid grid-cols-2 sm:grid-cols-2 gap-6 pt-4">
+          {/* STATS - Minimal glass cards */}
+          <div className="grid grid-cols-2 gap-4 pt-4">
 
-            <div className="stat-item">
-  <div className="flex items-baseline gap-1">
-    <span ref={statRefs.experience} className="stat-number">0</span>
-    <span className="stat-plus">+</span>
-  </div>
-  <div className="stat-label">Years of Experience</div>
-</div>
+            <div 
+              className="group p-5 rounded-2xl transition-all duration-300 hover:scale-105"
+              style={{
+                background: 'rgba(255, 255, 255, 0.5)',
+                backdropFilter: 'blur(20px)',
+                border: '1px solid rgba(255, 255, 255, 0.6)',
+                boxShadow: '0 4px 16px rgba(0, 0, 0, 0.04)',
+              }}
+            >
+              <div className="flex items-baseline gap-1">
+                <span 
+                  ref={statRefs.experience} 
+                  className="text-4xl font-bold"
+                  style={{
+                    background: 'linear-gradient(135deg, #0b4b69ff 0%, #16438bff 100%)',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif',
+                  }}
+                >
+                  0
+                </span>
+                <span 
+                  className="text-2xl font-semibold"
+                  style={{
+                    background: 'linear-gradient(135deg, #0b4b69ff 0%, #16438bff 100%)',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                  }}
+                >
+                  +
+                </span>
+              </div>
+              <div 
+                className="text-sm text-slate-600 mt-2 font-medium"
+                style={{
+                  fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif',
+                }}
+              >
+                Years of Experience
+              </div>
+            </div>
 
+            <div 
+              className="group p-5 rounded-2xl transition-all duration-300 hover:scale-105"
+              style={{
+                background: 'rgba(255, 255, 255, 0.5)',
+                backdropFilter: 'blur(20px)',
+                border: '1px solid rgba(255, 255, 255, 0.6)',
+                boxShadow: '0 4px 16px rgba(0, 0, 0, 0.04)',
+              }}
+            >
+              <div className="flex items-baseline gap-1">
+                <span 
+                  ref={statRefs.clients} 
+                  className="text-4xl font-bold"
+                  style={{
+                    background: 'linear-gradient(135deg, #0b4b69ff 0%, #16438bff 100%)',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif',
+                  }}
+                >
+                  0
+                </span>
+                <span 
+                  className="text-2xl font-semibold"
+                  style={{
+                    background: 'linear-gradient(135deg, #0b4b69ff 0%, #16438bff 100%)',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                  }}
+                >
+                  +
+                </span>
+              </div>
+              <div 
+                className="text-sm text-slate-600 mt-2 font-medium"
+                style={{
+                  fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif',
+                }}
+              >
+                Satisfied Clients
+              </div>
+            </div>
 
-            <div className="stat-item">
-  <div className="flex items-baseline gap-1">
-    <span ref={statRefs.clients} className="stat-number">0</span>
-    <span className="stat-plus">+</span>
-  </div>
-  <div className="stat-label">Satisfied Clients</div>
-</div>
+            <div 
+              className="group p-5 rounded-2xl transition-all duration-300 hover:scale-105"
+              style={{
+                background: 'rgba(255, 255, 255, 0.5)',
+                backdropFilter: 'blur(20px)',
+                border: '1px solid rgba(255, 255, 255, 0.6)',
+                boxShadow: '0 4px 16px rgba(0, 0, 0, 0.04)',
+              }}
+            >
+              <div className="flex items-baseline gap-1">
+                <span 
+                  ref={statRefs.projects} 
+                  className="text-4xl font-bold"
+                  style={{
+                    background: 'linear-gradient(135deg, #0b4b69ff 0%, #16438bff 100%',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif',
+                  }}
+                >
+                  0
+                </span>
+                <span 
+                  className="text-2xl font-semibold"
+                  style={{
+                    background: 'linear-gradient(135deg, #0b4b69ff 0%, #16438bff 100%)',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                  }}
+                >
+                  +
+                </span>
+              </div>
+              <div 
+                className="text-sm text-slate-600 mt-2 font-medium"
+                style={{
+                  fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif',
+                }}
+              >
+                Successful Projects
+              </div>
+            </div>
 
-
-            <div className="stat-item">
-  <div className="flex items-baseline gap-1">
-    <span ref={statRefs.projects} className="stat-number">0</span>
-    <span className="stat-plus">+</span>
-  </div>
-  <div className="stat-label">Successful Projects</div>
-</div>
-
-
-            <div className="stat-item">
-  <div className="flex items-baseline gap-1">
-    <span ref={statRefs.engineers} className="stat-number">0</span>
-    <span className="stat-plus">+</span>
-  </div>
-  <div className="stat-label">Trusted Engineers</div>
-</div>
-
-
+            <div 
+              className="group p-5 rounded-2xl transition-all duration-300 hover:scale-105"
+              style={{
+                background: 'rgba(255, 255, 255, 0.5)',
+                backdropFilter: 'blur(20px)',
+                border: '1px solid rgba(255, 255, 255, 0.6)',
+                boxShadow: '0 4px 16px rgba(0, 0, 0, 0.04)',
+              }}
+            >
+              <div className="flex items-baseline gap-1">
+                <span 
+                  ref={statRefs.engineers} 
+                  className="text-4xl font-bold"
+                  style={{
+                    background: 'linear-gradient(135deg, #0b4b69ff 0%, #16438bff 100%)',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif',
+                  }}
+                >
+                  0
+                </span>
+                <span 
+                  className="text-2xl font-semibold"
+                  style={{
+                    background: 'linear-gradient(135deg, #0b4b69ff 0%, #16438bff 100%)',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                  }}
+                >
+                  +
+                </span>
+              </div>
+              <div 
+                className="text-sm text-slate-600 mt-2 font-medium"
+                style={{
+                  fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif',
+                }}
+              >
+                Trusted Engineers
+              </div>
+            </div>
           </div>
 
-          {/* Vision / Culture */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 pt-6">
-            <div className="info-card">
-              <h4 className="font-semibold text-slate-900">Vision</h4>
-              <p className="mt-1 text-slate-600 text-sm">
+          {/* Vision / Culture - Minimal glass */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-6">
+            <div 
+              className="p-5 rounded-2xl transition-all duration-300 hover:scale-102"
+              style={{
+                background: 'rgba(255, 255, 255, 0.4)',
+                backdropFilter: 'blur(15px)',
+                border: '1px solid rgba(255, 255, 255, 0.5)',
+                boxShadow: '0 2px 12px rgba(0, 0, 0, 0.03)',
+              }}
+            >
+              <h4 
+                className="font-semibold text-slate-900 mb-1"
+                style={{
+                  fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif',
+                }}
+              >
+                Vision
+              </h4>
+              <p 
+                className="text-slate-600 text-sm leading-relaxed"
+                style={{
+                  fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif',
+                }}
+              >
                 Transform healthcare through seamless, intelligent technology.
               </p>
             </div>
 
-            <div className="info-card">
-              <h4 className="font-semibold text-slate-900">Culture</h4>
-              <p className="mt-1 text-slate-600 text-sm">
+            <div 
+              className="p-5 rounded-2xl transition-all duration-300 hover:scale-102"
+              style={{
+                background: 'rgba(255, 255, 255, 0.4)',
+                backdropFilter: 'blur(15px)',
+                border: '1px solid rgba(255, 255, 255, 0.5)',
+                boxShadow: '0 2px 12px rgba(0, 0, 0, 0.03)',
+              }}
+            >
+              <h4 
+                className="font-semibold text-slate-900 mb-1"
+                style={{
+                  fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif',
+                }}
+              >
+                Culture
+              </h4>
+              <p 
+                className="text-slate-600 text-sm leading-relaxed"
+                style={{
+                  fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif',
+                }}
+              >
                 Built on teamwork, leadership, growth and responsibility.
               </p>
             </div>
@@ -155,18 +372,30 @@ export default function About({ img = "/assets/about.png" }) {
 
         </div>
 
-        {/* RIGHT IMAGE — Clean PNG */}
+        {/* RIGHT IMAGE — Clean with subtle effect */}
         <div
           className={
-            "flex justify-center md:justify-end transition-opacity duration-900 delay-100 " +
+            "flex justify-center md:justify-end transition-all duration-900 delay-100 " +
             (visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8")
           }
         >
-          <img
-            src={img}
-            alt="Pura Solutions logo"
-            className="w-full max-w-sm object-contain"
-          />
+          <div className="relative">
+            <img
+              src={img}
+              alt="Pura Solutions logo"
+              className="w-full max-w-sm object-contain relative z-10"
+              style={{
+                filter: 'drop-shadow(0 10px 30px rgba(35, 163, 222, 0.15))',
+              }}
+            />
+            {/* Subtle glow behind image */}
+            <div 
+              className="absolute inset-0 blur-3xl opacity-20 -z-10"
+              style={{
+                background: 'radial-gradient(circle, rgba(35, 163, 222, 0.3) 0%, transparent 50%)',
+              }}
+            />
+          </div>
         </div>
 
       </div>
