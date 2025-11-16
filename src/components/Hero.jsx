@@ -73,6 +73,23 @@ export default function HeroCarousel({
 
   if (!items || items.length === 0) return null;
 
+  // helper: scroll to projects section
+  const scrollToProjects = () => {
+    const target = document.getElementById("catalog");
+    if (!target) {
+      // fallback: try anchor navigation
+      window.location.hash = "#catalog";
+      return;
+    }
+    // prefer scrollIntoView with smooth behavior, fallback to scrollTop
+    try {
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+    } catch (err) {
+      const top = target.getBoundingClientRect().top + window.pageYOffset;
+      window.scrollTo({ top, behavior: "smooth" });
+    }
+  };
+
   return (
     <section
       ref={heroRef}
@@ -342,14 +359,16 @@ export default function HeroCarousel({
                   </a>
 
                   <button
-                    onClick={() => setIndex((i) => (i + 1) % items.length)}
+                    // <-- CHANGED: now scrolls to #catalog instead of cycling carousel
+                    onClick={scrollToProjects}
+                    aria-controls="catalog"
                     className="group inline-flex items-center gap-2 sm:gap-3 px-6 sm:px-8 py-3 sm:py-4 rounded-[20px] font-semibold text-slate-700 transition-all duration-500"
                     style={{
                       background: "rgba(255, 255, 255, 0.3)",
                       backdropFilter: "blur(25px) saturate(150%)",
                       WebkitBackdropFilter: "blur(25px) saturate(150%)",
                       border: "1.5px solid rgba(255, 255, 255, 0.6)",
-                      boxShadow: "0 8px 30px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.7)",
+                      boxShadow: "0 8px 30px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255,255,255,0.7)",
                     }}
                     onMouseEnter={(e) => {
                       e.currentTarget.style.transform = "translateY(-2px)";
