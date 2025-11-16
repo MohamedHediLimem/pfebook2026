@@ -301,10 +301,10 @@ export default function HeroCarousel({
                   }}
                 >
                   Explore innovative projects across{" "}
-                  <span className="text-sky-600 font-medium">Information Technology</span>,{" "}
-                  <span className="text-indigo-600 font-medium">Quality Management & Assurance</span>,{" "}
-                  <span className="text-purple-600 font-medium">Business Management</span> &{" "}
-                  <span className="text-pink-600 font-medium">Biomedical Engineering</span>
+                  <span className="text-[#78B9B5] font-medium">Information Technology</span>,{" "}
+                  <span className="text-[#0F828C] font-medium">Quality Management & Assurance</span>,{" "}
+                  <span className="text-[#065084] font-medium">Business Management</span> &{" "}
+                  <span className="text-[#320A6B] font-medium">Biomedical Engineering</span>
                 </p>
 
                 {/* CTA Buttons with liquid glass */}
