@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
+import img from "../assets/pura-logoH.png";
+import img1 from "../assets/bg.png";
 
-export default function About({ img = "/assets/bg.png" }) {
+export default function About() {
   const containerRef = useRef(null);
   const [visible, setVisible] = useState(false);
 
@@ -76,7 +78,7 @@ export default function About({ img = "/assets/bg.png" }) {
       <div 
         className="absolute inset-0 z-0"
         style={{
-          backgroundImage: 'url(/src/assets/bg.png)',
+          backgroundImage: `url(${img1})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
