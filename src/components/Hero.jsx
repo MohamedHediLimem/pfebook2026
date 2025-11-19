@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
+import DefaultLogo from "../assets/LPB.png";
 
 // Sample data
 const SAMPLE_INTERNSHIPS = [
@@ -13,7 +14,7 @@ const SAMPLE_INTERNSHIPS = [
 ];
 
 export default function HeroCarousel({
-  logoSrc = "src/assets/LPB.png",
+  logoSrc = DefaultLogo,
   internships = SAMPLE_INTERNSHIPS,
   ctaHref = "https://forms.gle/GxK7AeTZRGNw1NSV7",
   carouselSpeed = 5, // Speed in seconds for one complete cycle
