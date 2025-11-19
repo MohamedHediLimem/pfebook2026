@@ -9,7 +9,7 @@ import Modal from './components/Modal'
 import SAMPLE_INTERNSHIPS from './data/sample'
 
 // Importer les images
-import heroImg from './assets/LPB.webp'
+import heroImg from './assets/LPB.png'
 import aboutImg from './assets/LPH.png'
 
 
