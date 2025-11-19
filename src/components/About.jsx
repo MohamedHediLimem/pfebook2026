@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import img from "../assets/pura-logoH.png";
+import img from "../assets/LPH.png";
 import img1 from "../assets/bg.png";
 
 export default function About() {
@@ -387,7 +387,7 @@ export default function About() {
               alt="Pura Solutions logo"
               className="w-full max-w-sm object-contain relative z-10"
               style={{
-                filter: 'drop-shadow(0 10px 30px rgba(35, 163, 222, 0.15))',
+                filter: 'drop-shadow(0 10px 30px rgba(35, 163, 222, 0.04))',
               }}
             />
             {/* Subtle glow behind image */}

@@ -13,7 +13,7 @@ const SAMPLE_INTERNSHIPS = [
 ];
 
 export default function HeroCarousel({
-  logoSrc = "/logopura.png",
+  logoSrc = "src/assets/LPB.png",
   internships = SAMPLE_INTERNSHIPS,
   ctaHref = "https://forms.gle/GxK7AeTZRGNw1NSV7",
   carouselSpeed = 5, // Speed in seconds for one complete cycle

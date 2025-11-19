@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 
 /**
- * Projects - Fixed, uniform cards with Apple-like glass look
+ * Projects - Fully responsive cards with Apple-like glass look
  * Props:
  *  - internships: array of project objects
  *  - onOpen: function(project) to open details
@@ -79,45 +79,46 @@ export default function ProjectsFixed({ internships = [], onOpen = () => {} }) {
   };
 
   return (
-    <section id="catalog" className="py-16">
-      <div className="max-w-6xl mx-auto px-6">
+    <section id="catalog" className="py-8 sm:py-12 lg:py-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div className="flex flex-col gap-4 sm:gap-6">
           <div>
-            <div className="mb-3 inline-block animate-pulse">
+            <div className="mb-3 inline-block animate-pulse w-full sm:w-auto">
               <div className="deadline-glass">
                 <div className="absolute inset-0 bg-gradient-to-br from-white/40 via-transparent to-transparent"></div>
-                <p className="relative text-red-600 font-semibold text-md flex items-center gap-2">
-                  <span className="text-lg">⚠️</span>
-                  <span>Deadline: December 1st, 2025, at 11:59 PM</span>
+                <p className="relative text-red-600 font-semibold text-sm sm:text-base flex items-center gap-2 flex-wrap">
+                  <span className="text-base sm:text-lg">⚠️</span>
+                  <span className="flex-1 min-w-[200px]">Deadline: December 1st, 2025, at 11:59 PM</span>
                 </p>
               </div>
             </div>
             <div>
-              <h3 className="text-3xl font-extrabold bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 bg-clip-text text-transparent">
+              <h3 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 bg-clip-text text-transparent">
                 Internship Projects
               </h3>
-              <p className="text-slate-500 mt-2">Explore roles across IT, Business Management, Quality Management, and Biomedical Engineering.</p>
+              <p className="text-slate-500 mt-2 text-sm sm:text-base">Explore roles across IT, Business Management, Quality Management, and Biomedical Engineering.</p>
             </div>
           </div>
-          <div className="flex items-center gap-3">
-            <div className="text-sm text-slate-600 mr-2 hidden md:block">
+          
+          {/* Search Controls */}
+          <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
+            <div className="text-sm text-slate-600 sm:mr-2">
               {filtered.length} result{filtered.length !== 1 ? "s" : ""}
             </div>
 
-            {/* Search - Glass style */}
-            <div className="flex items-center gap-2">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-3 flex-1 sm:flex-initial">
               <input
                 aria-label="Search roles, skills or companies"
                 value={queryRaw}
                 onChange={(e) => setQueryRaw(e.target.value)}
                 placeholder="Search roles, skills or companies"
-                className="search-glass px-4 py-2 rounded-xl min-w-[220px] outline-none focus:ring-2 focus:ring-blue-500/50 transition-all"
+                className="search-glass px-4 py-2.5 sm:py-2 rounded-xl w-full sm:min-w-[220px] lg:min-w-[280px] outline-none focus:ring-2 focus:ring-blue-500/50 transition-all text-sm sm:text-base"
               />
               <select
                 value={filterDomain}
                 onChange={(e) => setFilterDomain(e.target.value)}
-                className="select-glass px-3 py-2 rounded-xl hidden sm:inline-block outline-none focus:ring-2 focus:ring-blue-500/50 transition-all"
+                className="select-glass px-3 py-2.5 sm:py-2 rounded-xl w-full sm:w-auto outline-none focus:ring-2 focus:ring-blue-500/50 transition-all text-sm sm:text-base"
                 aria-label="Filter domain"
               >
                 {domains.map((d) => (
@@ -131,12 +132,12 @@ export default function ProjectsFixed({ internships = [], onOpen = () => {} }) {
         </div>
 
         {/* Domain chips - Glass style */}
-        <div className="mt-4 flex gap-3 flex-wrap">
+        <div className="mt-4 sm:mt-6 flex gap-2 sm:gap-3 flex-wrap">
           {domains.map((d) => (
             <button
               key={d}
               onClick={() => setFilterDomain(d)}
-              className={`chip-glass px-4 py-2 rounded-full text-sm font-medium transition-all transform hover:scale-105 ${
+              className={`chip-glass px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-medium transition-all transform hover:scale-105 ${
                 filterDomain === d ? "chip-active" : ""
               }`}
               aria-pressed={filterDomain === d}
@@ -146,8 +147,8 @@ export default function ProjectsFixed({ internships = [], onOpen = () => {} }) {
           ))}
         </div>
 
-        {/* Grid */}
-        <div ref={containerRef} className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
+        {/* Grid - Fully responsive */}
+        <div ref={containerRef} className="mt-6 sm:mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 lg:gap-6">
           {filtered.map((i, idx) => (
             <article
               key={i.id}
@@ -156,39 +157,39 @@ export default function ProjectsFixed({ internships = [], onOpen = () => {} }) {
               onKeyDown={(e) => {
                 if (e.key === "Enter") onOpen(i);
               }}
-              className={`card-glass flex flex-col h-full rounded-2xl p-6 focus:outline-none focus:ring-4 focus:ring-blue-500/30 transform transition-all duration-500 hover:scale-[1.02] ${
+              className={`card-glass flex flex-col h-full rounded-xl sm:rounded-2xl p-4 sm:p-5 lg:p-6 focus:outline-none focus:ring-4 focus:ring-blue-500/30 transform transition-all duration-500 hover:scale-[1.02] ${
                 reveal ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
               }`}
               style={{ transitionDelay: `${idx * 60}ms` }}
             >
               {/* Top meta (domain and optional right-side small tag) */}
-              <div className="flex items-start justify-between gap-4">
-                <div className="domain-badge text-xs px-3 py-1.5 font-bold rounded-lg">{i.domain}</div>
-                {i.level && <div className="text-xs py-1 font-bold text-slate-400">{i.level}</div>}
+              <div className="flex items-start justify-between gap-2 sm:gap-4">
+                <div className="domain-badge text-xs px-2 py-1.5 font-bold rounded-lg flex-shrink-0">{i.domain}</div>
+                {i.level && <div className="text-xs py-1 font-bold text-slate-400 flex-shrink-0">{i.level}</div>}
               </div>
 
               {/* Body: title, company, description, tags */}
               <div className="flex-1 flex flex-col mt-3">
-                <h4 id={`proj-${i.id}-id`} className="font-semibold text-lg bg-gradient-to-r from-blue-500 to-violet-600 bg-clip-text text-transparent leading-tight">
+                <h4 id={`proj-${i.id}-id`} className="font-semibold text-base sm:text-lg bg-gradient-to-r from-blue-500 to-violet-600 bg-clip-text text-transparent leading-tight">
                   <Highlight text={i.id} />
                 </h4>
-                <h4 id={`proj-${i.id}-title`} className="font-semibold text-lg text-slate-900 leading-tight mt-1">
+                <h4 id={`proj-${i.id}-title`} className="font-semibold text-base sm:text-lg text-slate-900 leading-tight mt-1">
                   <Highlight text={i.title} />
                 </h4>
-                <div className="text-sm text-slate-500 mt-1">
+                <div className="text-xs sm:text-sm text-slate-500 mt-1">
                   <Highlight text={` ${i.location || "Remote"}`} />
                 </div>
 
                 {/* description (clamped) */}
-                <p className="mt-4 text-slate-600 text-sm description">
+                <p className="mt-3 sm:mt-4 text-slate-600 text-xs sm:text-sm description">
                   <Highlight text={i.excerpt || i.description || ""} />
                 </p>
 
                 {/* tags - fixed area */}
-                <div className="mt-4 tags-row">
-                  <div className="flex flex-wrap gap-2">
+                <div className="mt-3 sm:mt-1 tags-row">
+                  <div className="flex flex-wrap gap-1">
                     {(i.tags || []).slice(0, 12).map((t) => (
-                      <span key={t} className="tag-glass text-xs px-3 py-1 rounded-full">
+                      <span key={t} className="tag-glass text-xs px-2 py-0.5 rounded-full">
                         {t}
                       </span>
                     ))}
@@ -197,12 +198,12 @@ export default function ProjectsFixed({ internships = [], onOpen = () => {} }) {
               </div>
 
               {/* Footer: meta + buttons (bottom aligned) */}
-              <div className="mt-6 pt-3 flex items-center justify-left gap-4">
-                <div className="flex items-center gap-3 flex-shrink-0">
+              <div className="mt-4 sm:mt-6 pt-3 flex items-center justify-center sm:justify-start gap-3 sm:gap-4">
+                <div className="flex items-center gap-2 sm:gap-3 w-full sm:w-auto">
                   {/* Details - primary gradient button */}
                   <button
                     onClick={() => onOpen(i)}
-                    className="button-gradient w-28 md:w-32 h-11 rounded-full inline-flex items-center justify-center text-white font-semibold transform transition hover:scale-105"
+                    className="button-gradient flex-1 sm:flex-initial sm:w-28 lg:w-32 h-10 sm:h-11 rounded-full inline-flex items-center justify-center text-white font-semibold text-sm sm:text-base transform transition hover:scale-105"
                     aria-label={`Details for ${i.title}`}
                   >
                     Details
@@ -213,7 +214,7 @@ export default function ProjectsFixed({ internships = [], onOpen = () => {} }) {
                     href="https://forms.gle/GxK7AeTZRGNw1NSV7"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="button-glass w-28 md:w-32 h-11 rounded-full inline-flex items-center justify-center font-medium transform transition hover:scale-105"
+                    className="button-glass flex-1 sm:flex-initial sm:w-28 lg:w-32 h-10 sm:h-11 rounded-full inline-flex items-center justify-center font-medium text-sm sm:text-base transform transition hover:scale-105"
                     aria-label={`Apply to ${i.title}`}
                   >
                     Apply
@@ -225,7 +226,7 @@ export default function ProjectsFixed({ internships = [], onOpen = () => {} }) {
         </div>
 
         {filtered.length === 0 && (
-          <div className="mt-8 text-slate-500">No internships found. Try a different search or clear filters.</div>
+          <div className="mt-8 text-slate-500 text-sm sm:text-base text-center sm:text-left">No internships found. Try a different search or clear filters.</div>
         )}
       </div>
 
@@ -237,23 +238,37 @@ export default function ProjectsFixed({ internships = [], onOpen = () => {} }) {
           -webkit-line-clamp: 3;
           -webkit-box-orient: vertical;
           overflow: hidden;
-          min-height: 72px;
-          max-height: 72px;
+          min-height: 60px;
+          max-height: 60px;
+        }
+
+        @media (min-width: 640px) {
+          .description {
+            min-height: 72px;
+            max-height: 72px;
+          }
         }
 
         /* tags area fixed height (prevents long tag lists from pushing footer) */
         .tags-row {
-          min-height: 56px;
-          max-height: 56px;
+          min-height: 48px;
+          max-height: 48px;
           overflow: hidden;
+        }
+
+        @media (min-width: 640px) {
+          .tags-row {
+            min-height: 56px;
+            max-height: 56px;
+          }
         }
 
         /* Apple Glass Deadline Badge */
         .deadline-glass {
           position: relative;
           overflow: hidden;
-          padding: 0.75rem 1.5rem;
-          border-radius: 1rem;
+          padding: 0.625rem 1rem;
+          border-radius: 0.75rem;
           backdrop-filter: blur(20px) saturate(180%);
           -webkit-backdrop-filter: blur(20px) saturate(180%);
           background: linear-gradient(135deg, rgba(255,245,245,0.9) 0%, rgba(254,242,242,0.8) 100%);
@@ -262,6 +277,13 @@ export default function ProjectsFixed({ internships = [], onOpen = () => {} }) {
             0 8px 32px 0 rgba(239,68,68,0.18),
             inset 0 1px 0 0 rgba(255,255,255,0.6),
             inset 0 -1px 0 0 rgba(239,68,68,0.1);
+        }
+
+        @media (min-width: 640px) {
+          .deadline-glass {
+            padding: 0.75rem 1.5rem;
+            border-radius: 1rem;
+          }
         }
 
         /* Search & Select Glass */
@@ -365,13 +387,6 @@ export default function ProjectsFixed({ internships = [], onOpen = () => {} }) {
           box-shadow: 
             0 8px 28px rgba(2,6,23,0.12),
             inset 0 1px 0 0 rgba(255,255,255,0.9);
-        }
-
-        /* responsiveness */
-        @media (max-width: 768px) {
-          .w-28 { width: 96px; }
-          .md\\:w-32 { width: 96px; }
-          .h-11 { height: 40px; }
         }
       `}</style>
     </section>

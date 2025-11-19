@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import Header from './components/Header'
 import Hero from './components/Hero'
 import Quote from './components/Quote'
 import About from './components/About'
@@ -10,26 +9,22 @@ import Modal from './components/Modal'
 import SAMPLE_INTERNSHIPS from './data/sample'
 
 // Importer les images
-import heroImg from './assets/pura-logo.png'
-import quoteImg from './assets/quote.png'
-import aboutImg from './assets/about.png'
-import valuesImg from './assets/values.png'
+import heroImg from './assets/LPB.png'
+import aboutImg from './assets/LPH.png'
+
 
 export default function App() {
   const [modalItem, setModalItem] = useState(null)
 
   return (
     <div className="font-sans text-slate-800">
-      <Header onNavClick={(id) => {
-        const el = document.getElementById(id)
-        if (el) el.scrollIntoView({ behavior: 'smooth' })
-      }} />
+      
 
       <main>
         <Hero img={heroImg} />
-        <Quote img={quoteImg} />
+        <Quote /> 
         <About img={aboutImg} />
-        <Values img={valuesImg} />
+        <Values />
         <Projects internships={SAMPLE_INTERNSHIPS} onOpen={setModalItem} />
       </main>
 
