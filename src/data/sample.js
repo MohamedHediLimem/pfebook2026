@@ -111,7 +111,7 @@ const SAMPLE_INTERNSHIPS = [
   },
 {
     id: "PFE-26-DEV8",
-    title: "SaaS Development & AI Integrationn for Medical Platform",
+    title: "SaaS Development & AI Integration for Medical Platform",
     company: "Pura Solutions",
     domain: "Information Technology",
     subdomain: "Web Development",
