@@ -79,6 +79,66 @@ const SAMPLE_INTERNSHIPS = [
     Scope: "Stand up Kubernetes (EKS/AKS/GKE) for containerized services; configure object storage for files/models; implement IaC (Terraform/Pulumi), CI/CD (GitHub Actions/Jenkins/GitLab), RBAC and secrets management, encryption in transit/at rest, and monitoring/logging (Prometheus/Grafana/ELK); support GPU-enabled nodes and model deployment (TF Serving/TorchServe/FastAPI); out of scope: training new AI models from scratch.",
     Delivrables: "Infrastructure code repositories, multi-environment clusters, CI/CD pipelines, monitoring/alerting dashboards, and compliance documentation (architecture diagram, security checklist, backup/DR procedures)."
   },
+  {
+    id: "PFE-26-DEV6",
+    title: "Full-Stack Web, SEO & Chatbot/CRM Development",
+    company: "Pura Solutions",
+    domain: "Information Technology",
+    subdomain: "Web Development",
+    location: "On Site",
+    duration: "4–6 months",
+    level: "Engineering / Bachelor",
+    tags: ["Next.js","React","Node.js","CRM","SEO","Chatbot","Analytics","PostgreSQL"],
+    excerpt: "Develop a full-stack website with SEO, a lead-capture chatbot, and a lightweight CRM system.",
+    Objectives: "Build a full-stack web presence with SEO foundations, a lead-capture chatbot, and a lightweight CRM module to streamline marketing-to-sales handoff.",
+    Scope: "Implement Next.js/React front-end, Node.js/NestJS backend with PostgreSQL, SEO essentials (sitemap, meta, structured data), chatbot for lead qualification, and basic CRM features (contacts, deals, notes); out of scope: enterprise CRM migration.",
+    Delivrables: "Deployed web app, chatbot flows and integrations, SEO baseline report, CRM module with schema and APIs, and developer/admin documentation."
+  },
+   {
+    id: "PFE-26-DEV7",
+    title: "Web Development for Quality Management Platform",
+    company: "Pura Solutions",
+    domain: "Information Technology",
+    subdomain: "Web Development",
+    location: "On Site",
+    duration: "4–6 months",
+    level: "Engineering",
+    tags: ["React","NestJS","MongoDB","CI/CD","Docker","Kubernetes","Tailwind"],
+    excerpt: "Implement IMS (Inegrated Management System) Platform modules for documents, audits, KPIs, permissions, and CI/CD deployment.",
+    Objectives: "Implement core Quality Management Platform modules for document control, audits, KPIs, and permissions with scalable architecture and CI/CD.",
+    Scope: "React front-end with Tailwind UI, NestJS services, MongoDB schema design, role/permission management, audit workflows, KPI dashboards, dockerized deployment with CI/CD; out of scope: third-party marketplace integrations.",
+    Delivrables: "Feature-complete modules (documents, audits, KPIs, permissions), API documentation, environment setup with CI/CD, and admin/user guides."
+  },
+{
+    id: "PFE-26-DEV8",
+    title: "SaaS Development & AI Integrationn for Medical Platform",
+    company: "Pura Solutions",
+    domain: "Information Technology",
+    subdomain: "Web Development",
+    location: "On Site",
+    duration: "4–6 months",
+    level: "Engineering",
+    tags: ["NestJS","Next.js","REST API","AWS","Azure","CI/CD","DevOps","API Gateway","Security","Encryption"],
+    excerpt: "Implement IMS (Inegrated Management System) Platform modules for documents, audits, KPIs, permissions, and CI/CD deployment.",
+    Objectives: "Building a secure, scalable SaaS platform that enables seamless integration, management, and deployment of AI-powered medical APIs.",
+    Scope: "Developing a user-friendly interface, implementing API management and monitoring, ensuring medical data compliance, and integrating cloud and DevOps practices.",
+    Delivrables: "The project will deliver a functional SaaS platform with secure API integration, real-time monitoring, cloud deployment setup, and complete CI/CD and documentation."
+  },
+  {
+    id: "PFE-26-AI1",
+    title: "Enhancement & Optimization of Medical Image & OCR AI Models",
+    company: "Pura Solutions",
+    domain: "Information Technology",
+    subdomain: "Artificial Intelligence",
+    location: "On Site",
+    duration: "4–6 months",
+    level: "Engineering",
+    tags: ["AI" , "Deep Learning" , "Computer Vision"  ,"Medical Imaging" , "NLP" ,"MLOps" , "Healthcare AI"],
+    excerpt: "Improve and optimize existing AI models for medical image analysis and OCR to deliver higher accuracy, faster performance, and production-ready reliability.",
+    Objectives: "The objective is to enhance the accuracy, speed, and reliability of the existing AI models by refining their behavior, improving OCR extraction, strengthening data quality, and ensuring the models are validated and ready for production integration.",
+    Scope: "The scope covers model retraining, dataset cleaning and augmentation, OCR improvements, performance benchmarking, and preparing the models as easily deployable APIs that align with the platform’s technical requirements.",
+    Delivrables: "Updated AI imaging models, an improved OCR module, validation and performance reports, integration-ready model endpoints, and the necessary scripts and documentation for training and inference."
+  },
 
   // BUSINESS / MARKETING & SALES
   {
@@ -129,22 +189,7 @@ const SAMPLE_INTERNSHIPS = [
     Delivrables: "Market research brief, ICP/persona documents, outreach scripts and results, onboarding reports, and GTM insights deck with next-step recommendations."
   },
 
-  {
-    id: "PFE-26-DEV6",
-    title: "Full-Stack Web, SEO & Chatbot/CRM Development",
-    company: "Pura Solutions",
-    domain: "Information Technology",
-    subdomain: "Web Development",
-    location: "On Site",
-    duration: "4–6 months",
-    level: "Engineering / Bachelor",
-    tags: ["Next.js","React","Node.js","CRM","SEO","Chatbot","Analytics","PostgreSQL"],
-    excerpt: "Develop a full-stack website with SEO, a lead-capture chatbot, and a lightweight CRM system.",
-    Objectives: "Build a full-stack web presence with SEO foundations, a lead-capture chatbot, and a lightweight CRM module to streamline marketing-to-sales handoff.",
-    Scope: "Implement Next.js/React front-end, Node.js/NestJS backend with PostgreSQL, SEO essentials (sitemap, meta, structured data), chatbot for lead qualification, and basic CRM features (contacts, deals, notes); out of scope: enterprise CRM migration.",
-    Delivrables: "Deployed web app, chatbot flows and integrations, SEO baseline report, CRM module with schema and APIs, and developer/admin documentation."
-  },
-
+  
   // QUALITY MANAGEMENT (ISO, GDPR)
   {
     id: "PFE-26-QLT1",
@@ -212,21 +257,8 @@ const SAMPLE_INTERNSHIPS = [
   },
 
   // QURELIO IT (web dev already included)
-  {
-    id: "PFE-26-DEV7",
-    title: "Web Development for Quality Management Platform",
-    company: "Pura Solutions",
-    domain: "Information Technology",
-    subdomain: "Web Development",
-    location: "On Site",
-    duration: "4–6 months",
-    level: "Engineering",
-    tags: ["React","NestJS","MongoDB","CI/CD","Docker","Kubernetes","Tailwind"],
-    excerpt: "Implement Qurelio modules for documents, audits, KPIs, permissions, and CI/CD deployment.",
-    Objectives: "Implement core Quality Management Platform modules for document control, audits, KPIs, and permissions with scalable architecture and CI/CD.",
-    Scope: "React front-end with Tailwind UI, NestJS services, MongoDB schema design, role/permission management, audit workflows, KPI dashboards, dockerized deployment with CI/CD; out of scope: third-party marketplace integrations.",
-    Delivrables: "Feature-complete modules (documents, audits, KPIs, permissions), API documentation, environment setup with CI/CD, and admin/user guides."
-  },
+ 
+
 
   {
     id: "PFE-26-BIO1",

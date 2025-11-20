@@ -25,6 +25,18 @@ export default function HeroCarousel({
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const listRef = useRef(null);
   const heroRef = useRef(null);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  const [logoLoaded, setLogoLoaded] = useState(false);
+
+useEffect(() => {
+  const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+  setPrefersReducedMotion(mediaQuery.matches);
+  
+  const handler = (e) => setPrefersReducedMotion(e.matches);
+  mediaQuery.addEventListener('change', handler);
+  return () => mediaQuery.removeEventListener('change', handler);
+}, []);
+
 
   // Mouse parallax
   useEffect(() => {
@@ -40,6 +52,14 @@ export default function HeroCarousel({
     window.addEventListener("mousemove", handleMouseMove);
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
+  useEffect(() => {
+  const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+  setPrefersReducedMotion(mediaQuery.matches);
+  
+  const handler = (e) => setPrefersReducedMotion(e.matches);
+  mediaQuery.addEventListener('change', handler);
+  return () => mediaQuery.removeEventListener('change', handler);
+}, []);
 
   // Auto-advance carousel
   useEffect(() => {
@@ -73,6 +93,17 @@ export default function HeroCarousel({
   }, [items.length]);
 
   if (!items || items.length === 0) return null;
+  useEffect(() => {
+  const observer = new IntersectionObserver(
+    ([entry]) => {
+      setPaused(!entry.isIntersecting);
+    },
+    { threshold: 0.5 }
+  );
+  
+  if (heroRef.current) observer.observe(heroRef.current);
+  return () => observer.disconnect();
+}, []);
 
   // helper: scroll to projects section
   const scrollToProjects = () => {
@@ -109,6 +140,8 @@ export default function HeroCarousel({
             transform: `translate(${mousePos.x * 50}px, ${mousePos.y * 50}px)`,
             transition: "transform 0.3s ease-out",
             animation: "float 25s ease-in-out infinite",
+            transform: prefersReducedMotion ? 'none' : `translate(${mousePos.x * 50}px, ${mousePos.y * 50}px)`
+
           }}
         />
         <div
@@ -121,6 +154,8 @@ export default function HeroCarousel({
             transform: `translate(${mousePos.x * -40}px, ${mousePos.y * -40}px)`,
             transition: "transform 0.3s ease-out",
             animation: "float 30s ease-in-out infinite reverse",
+            transform: prefersReducedMotion ? 'none' : `translate(${mousePos.x * 50}px, ${mousePos.y * 50}px)`
+
           }}
         />
         <div
@@ -133,6 +168,8 @@ export default function HeroCarousel({
             transform: `translate(${mousePos.x * 30}px, ${mousePos.y * 30}px)`,
             transition: "transform 0.3s ease-out",
             animation: "float 35s ease-in-out infinite",
+            transform: prefersReducedMotion ? 'none' : `translate(${mousePos.x * 50}px, ${mousePos.y * 50}px)`
+
           }}
         />
       </div>
@@ -545,6 +582,7 @@ export default function HeroCarousel({
           .text-7xl { font-size: 3rem !important; }
           .text-8xl { font-size: 3.5rem !important; }
         }
+          
       `}</style>
     </section>
   );
