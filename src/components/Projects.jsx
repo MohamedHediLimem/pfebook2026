@@ -89,7 +89,7 @@ export default function ProjectsFixed({ internships = [], onOpen = () => {} }) {
                 <div className="absolute inset-0 bg-gradient-to-br from-white/40 via-transparent to-transparent"></div>
                 <p className="relative text-red-600 font-semibold text-sm sm:text-base flex items-center gap-2 flex-wrap">
                   <span className="text-base sm:text-lg">⚠️</span>
-                  <span className="flex-1 min-w-[200px]">Deadline: December 1st, 2025, at 11:59 PM</span>
+                  <span className="flex-1 min-w-[200px]">Deadline: December 8th, 2025, at 11:59 PM</span>
                 </p>
               </div>
             </div>
