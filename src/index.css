@@ -1,10 +1,7 @@
-/* Tailwind entry points */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-/* Optional Google font */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
 
 :root{
   --pura: #0b4fc6;
@@ -23,12 +20,10 @@ body{
   line-height: 1.45;
 }
 
-/* small base overrides */
 @layer base {
   a { color: var(--pura); }
 }
 
-/* components */
 @layer components {
   .btn-primary {
     @apply inline-flex items-center justify-center px-4 py-2 rounded-lg font-semibold shadow-md;
@@ -43,7 +38,6 @@ body{
   .card { border-radius: var(--radius-lg); box-shadow: var(--card-shadow); background: white; }
 }
 
-/* helpers */
 .glass {
   background: linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.4));
   backdrop-filter: blur(6px);
