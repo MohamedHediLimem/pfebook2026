@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import Image from "../assets/LPB.png";
 
 // HeroCarousel — updated
-// - unified deadline behaviour: default deadline = Monday Dec 8, 2025 23:59 (Africa/Tunis, +01:00)
+// - unified deadline behaviour: default deadline = Tuesday Dec 8, 2026 23:59 (Africa/Tunis, +01:00)
 // - progress bar color interpolates from light blue -> red as deadline approaches
 // - mobile + desktop countdowns show "Applications closed" when expired
 // - respects prefers-reduced-motion
@@ -26,7 +26,7 @@ export default function HeroCarousel({
   internships = SAMPLE_INTERNSHIPS,
   ctaHref = "https://forms.gle/GxK7AeTZRGNw1NSV7",
   carouselSpeed = 40,
-  deadlineIso = "2025-12-08T23:59:00+01:00",
+  deadlineIso = "2026-12-08T23:59:00+01:00",
 }) {
   const items = useMemo(() => internships || [], [internships]);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
@@ -202,7 +202,7 @@ export default function HeroCarousel({
             }}
           >
             <div className="flex flex-col items-start leading-tight w-[300px]">
-              <span className="text-sm text-slate-700">Deadline: December 8th, 2025, at 11:59 PM</span>
+              <span className="text-sm text-slate-700">Deadline: December 8th, 2026, at 11:59 PM</span>
 
               {!isExpired ? (
                 <>

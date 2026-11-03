@@ -19,7 +19,7 @@ import aboutImg from "./assets/LPH.png";
  * - If false: render the normal site
  */
 
-const APPLICATIONS_CLOSED = true; // <-- set to true to show only the closed page
+const APPLICATIONS_CLOSED = false; // <-- set to true to show only the closed page
 
 export default function App() {
   const [modalItem, setModalItem] = useState(null);
