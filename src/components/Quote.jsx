@@ -1,92 +1,58 @@
 import React from "react";
+import { DEADLINE_LABEL, EMAIL, FORM_URL, STEPS } from "../data/content";
+import { Icon, Reveal } from "./ui";
 
-export default function Quote({ bgAccent = null }) {
+/* Final call to action: quote, how to apply, contact. */
+export default function Quote() {
   return (
-    <section
-      className="relative w-full min-h-[520px] overflow-hidden flex items-center"
-      aria-label="Quote section"
-    >
-      {/* FULL-WIDTH LIQUID GLASS LAYER */}
-      <div
-        className="absolute inset-0 z-0 liquid-glass-surface"
-        aria-hidden="true"
-      />
+    <section id="apply" className="relative px-3 pb-24 sm:px-6 sm:pb-32">
+      <div className="relative mx-auto max-w-7xl overflow-hidden rounded-[2.5rem] bg-ink text-white">
+        <div className="pointer-events-none absolute inset-0" aria-hidden="true">
+          <div className="aurora -left-20 -top-32 h-[460px] w-[460px] bg-[#0788CC] !opacity-50" />
+          <div className="aurora -bottom-40 right-0 h-[420px] w-[420px] bg-[#4FC3F7] !opacity-30" style={{ animationDelay: "-10s" }} />
+          <div className="grid-bg absolute inset-0" />
+        </div>
 
-      {/* optional subtle background texture/image behind the glass (very dim) */}
-      {bgAccent && (
-        <div
-          aria-hidden="true"
-          className="absolute inset-0 z-[-1] bg-center bg-cover opacity-6"
-          style={{ backgroundImage: `url(${bgAccent})`, mixBlendMode: "overlay" }}
-        />
-      )}
+        <div className="relative grid gap-12 px-6 py-16 sm:px-12 sm:py-20 lg:grid-cols-2 lg:gap-16 lg:px-16">
+          <Reveal className="flex flex-col">
+            <span className="eyebrow !text-pura-sky"><span className="h-px w-6 bg-pura-sky" />Join us</span>
+            <blockquote className="mt-5 font-display text-3xl font-semibold leading-tight sm:text-4xl lg:text-5xl">
+              Your <span className="text-grad">ideas</span>, <span className="text-grad">passion</span> and{" "}
+              <span className="text-pura-sun">impact</span> will drive our next milestones.
+            </blockquote>
+            <div className="mt-4 text-sm font-medium text-white/50">Pura Solutions</div>
 
-      {/* vignette to add depth */}
-      <div
-        aria-hidden="true"
-        className="absolute inset-0 z-10 pointer-events-none"
-        style={{
-          background: "radial-gradient(ellipse at center, rgba(213, 213, 213, 0) 40%, rgba(95, 95, 95, 0.13) 100%)",
-        }}
-      />
-
-      {/* CONTENT (left-center) */}
-      <div className="relative z-20 max-w-6xl mx-auto w-full px-6">
-        <div className="flex items-center min-h-[440px]">
-          <div className="w-full md:w-1/2 flex items-center">
-            <div className="pl-2 md:pl-8">
-              <h2 className="text-3xl md:text-4xl font-semibold leading-tight text-black">
-                Your <span className="font-extrabold">ideas</span>,{" "}
-                <span className="font-extrabold">passion</span>, and{" "}
-                <span className="font-extrabold">impact</span> will drive our next milestones.
-              </h2>
-
-              <div className="mt-4 text-sm font-bold text-black/70">- Pura Solutions</div>
-
-              <div className="mt-8">
-                <a
-                  href="https://forms.gle/GxK7AeTZRGNw1NSV7"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-3 px-6 py-3 rounded-full glass-button text-sm font-medium"
-                >
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
-                    <path d="M12 5v14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                    <path d="M5 12l7-7 7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
-                  <span>Apply Now</span>
-                </a>
-              </div>
+            <div className="mt-10 flex flex-wrap gap-3">
+              <a href={FORM_URL} target="_blank" rel="noopener noreferrer" className="btn-primary !px-7 !py-3.5 text-base">
+                Apply now <Icon name="arrowUpRight" size={18} />
+              </a>
+              <a href={`mailto:${EMAIL}`} className="btn-ghost-dark !px-6 !py-3.5">
+                <Icon name="mail" size={16} /> Contact us
+              </a>
             </div>
-          </div>
+            <div className="mt-6 inline-flex w-fit items-center gap-2 rounded-full bg-pura-sun px-4 py-2 text-sm font-semibold text-ink">
+              <Icon name="calendar" size={16} /> Deadline: {DEADLINE_LABEL}
+            </div>
+          </Reveal>
 
-          {/* optional right gap */}
-          <div className="hidden md:block md:w-1/2" />
+          <Reveal delay={120} className="glass-dark rounded-3xl p-6 sm:p-8">
+            <h3 className="font-display text-xl font-semibold">How to apply</h3>
+            <ol className="mt-6 space-y-5">
+              {STEPS.map(([title, text], i) => (
+                <li key={title} className="flex gap-4">
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-pura-sky to-pura-deep font-display text-sm font-bold">
+                    {i + 1}
+                  </span>
+                  <div>
+                    <div className="font-semibold">{title}</div>
+                    <div className="mt-0.5 text-sm text-white/60">{text}</div>
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </Reveal>
         </div>
       </div>
-
-      {/* decorative floating blobs (on top of the glass surface) */}
-      <div className="blob blob-1 pointer-events-none z-15" aria-hidden="true" />
-      <div className="blob blob-2 pointer-events-none z-15" aria-hidden="true" />
-      <div className="blob blob-3 pointer-events-none z-15" aria-hidden="true" />
-
-      {/* Inline styles for liquid glass surface + animations */}
-      <style>{`
-      
-
-        /* glass button */
-        .glass-button {
-          background: rgba(255,255,255,0.85);
-          color: black;
-          border: 1px solid rgba(0,0,0,0.06);
-          box-shadow: 0 8px 24px rgba(2,6,23,0.08);
-          backdrop-filter: blur(6px);
-          -webkit-backdrop-filter: blur(6px);
-          transition: transform 0.22s ease, box-shadow 0.22s ease;
-        }
-        .glass-button:hover { transform: translateY(-3px); box-shadow: 0 14px 36px rgba(2,6,23,0.10); }
-
-      `}</style>
     </section>
   );
 }

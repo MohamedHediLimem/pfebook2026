@@ -1,394 +1,175 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useMemo, useState } from "react";
+import { DEADLINE_LABEL, DOMAINS, FORM_URL, domainColor } from "../data/content";
+import { Icon, Reveal } from "./ui";
 
-/**
- * Projects - Fully responsive cards with Apple-like glass look
- * Props:
- *  - internships: array of project objects
- *  - onOpen: function(project) to open details
- */
-export default function ProjectsFixed({ internships = [], onOpen = () => {} }) {
-  // UI state
-  const [queryRaw, setQueryRaw] = useState("");
-  const [query, setQuery] = useState("");
-  const [filterDomain, setFilterDomain] = useState("All");
-
-  // debounce search input (300ms)
-  useEffect(() => {
-    const t = setTimeout(() => setQuery(queryRaw.trim()), 300);
-    return () => clearTimeout(t);
-  }, [queryRaw]);
-
-  // derive domains
-  const domains = useMemo(
-    () => ["All", ...Array.from(new Set((internships || []).map((i) => i.domain || "Other")))],
-    [internships]
-  );
-
-  // filtered results (memoized)
-  const filtered = useMemo(() => {
-    const q = query.toLowerCase();
-    return (internships || []).filter((i) => {
-      const hay = [i.title, i.company, (i.tags || []).join(" "), i.excerpt, i.location]
-        .join(" ")
-        .toLowerCase();
-      const matchQuery = q === "" ? true : hay.includes(q);
-      const matchDomain = filterDomain === "All" ? true : (i.domain || "Other") === filterDomain;
-      return matchQuery && matchDomain;
-    });
-  }, [internships, query, filterDomain]);
-
-  // subtle reveal-on-scroll (optional)
-  const containerRef = useRef(null);
-  const [reveal, setReveal] = useState(false);
-  useEffect(() => {
-    const el = containerRef.current;
-    if (!el) return;
-    const obs = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting) {
-          setReveal(true);
-          obs.disconnect();
-        }
-      },
-      { threshold: 0.06 }
-    );
-    obs.observe(el);
-    return () => obs.disconnect();
-  }, []);
-
-  // highlight helper
-  const Highlight = ({ text = "" }) => {
-    if (!query) return <>{text}</>;
-    const parts = [];
-    const lower = text.toLowerCase();
-    const q = query.toLowerCase();
-    let start = 0;
-    let idx = lower.indexOf(q, start);
-    while (idx !== -1) {
-      if (idx > start) parts.push(text.slice(start, idx));
-      parts.push(
-        <mark key={idx} className="bg-yellow-100 text-yellow-800 px-[2px] rounded-sm">
-          {text.slice(idx, idx + q.length)}
-        </mark>
-      );
-      start = idx + q.length;
-      idx = lower.indexOf(q, start);
-    }
-    if (start < text.length) parts.push(text.slice(start));
-    return <>{parts}</>;
-  };
-
+function Highlight({ text, query }) {
+  if (!query) return text;
+  const i = text.toLowerCase().indexOf(query.toLowerCase());
+  if (i < 0) return text;
   return (
-    <section id="catalog" className="py-8 sm:py-12 lg:py-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="flex flex-col gap-4 sm:gap-6">
-          <div>
-            <div className="mb-3 inline-block animate-pulse w-full sm:w-auto">
-              <div className="deadline-glass">
-                <div className="absolute inset-0 bg-gradient-to-br from-white/40 via-transparent to-transparent"></div>
-                <p className="relative text-red-600 font-semibold text-sm sm:text-base flex items-center gap-2 flex-wrap">
-                  <span className="text-base sm:text-lg">⚠️</span>
-                  <span className="flex-1 min-w-[200px]">Deadline: December 8th, 2026, at 11:59 PM</span>
-                </p>
-              </div>
-            </div>
-            <div>
-              <h3 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 bg-clip-text text-transparent">
-                Internship Projects
-              </h3>
-              <p className="text-slate-500 mt-2 text-sm sm:text-base">Explore roles across IT, Business Management, Quality Management, and Biomedical Engineering.</p>
-            </div>
-          </div>
-          
-          {/* Search Controls */}
-          <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
-            <div className="text-sm text-slate-600 sm:mr-2">
-              {filtered.length} result{filtered.length !== 1 ? "s" : ""}
-            </div>
+    <>
+      {text.slice(0, i)}
+      <mark className="rounded bg-yellow-200/80 px-0.5 text-inherit">{text.slice(i, i + query.length)}</mark>
+      {text.slice(i + query.length)}
+    </>
+  );
+}
 
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-3 flex-1 sm:flex-initial">
-              <input
-                aria-label="Search roles, skills or companies"
-                value={queryRaw}
-                onChange={(e) => setQueryRaw(e.target.value)}
-                placeholder="Search roles, skills or companies"
-                className="search-glass px-4 py-2.5 sm:py-2 rounded-xl w-full sm:min-w-[220px] lg:min-w-[280px] outline-none focus:ring-2 focus:ring-blue-500/50 transition-all text-sm sm:text-base"
-              />
-              <select
-                value={filterDomain}
-                onChange={(e) => setFilterDomain(e.target.value)}
-                className="select-glass px-3 py-2.5 sm:py-2 rounded-xl w-full sm:w-auto outline-none focus:ring-2 focus:ring-blue-500/50 transition-all text-sm sm:text-base"
-                aria-label="Filter domain"
-              >
-                {domains.map((d) => (
-                  <option key={d} value={d}>
-                    {d}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-        </div>
+function Card({ item, query, onOpen }) {
+  const c = domainColor(item.domain);
+  const tags = item.tags || [];
+  return (
+    <article
+      className="group relative flex h-full flex-col overflow-hidden rounded-3xl border border-slate-200 bg-white p-6 transition-all duration-500 hover:-translate-y-1.5 hover:shadow-[0_30px_70px_-30px_var(--glow)]"
+      style={{ "--c": c, "--glow": `${c}99` }}
+    >
+      {/* coloured top edge + hover wash */}
+      <div className="absolute inset-x-0 top-0 h-1" style={{ background: `linear-gradient(90deg, ${c}, ${c}33)` }} />
+      <div className="pointer-events-none absolute -right-24 -top-24 h-56 w-56 rounded-full opacity-0 blur-3xl transition-opacity duration-500 group-hover:opacity-100" style={{ background: `${c}22` }} />
 
-        {/* Domain chips - Glass style */}
-        <div className="mt-4 sm:mt-6 flex gap-2 sm:gap-3 flex-wrap">
-          {domains.map((d) => (
-            <button
-              key={d}
-              onClick={() => setFilterDomain(d)}
-              className={`chip-glass px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-medium transition-all transform hover:scale-105 ${
-                filterDomain === d ? "chip-active" : ""
-              }`}
-              aria-pressed={filterDomain === d}
-            >
-              {d}
-            </button>
-          ))}
-        </div>
-
-        {/* Grid - Fully responsive */}
-        <div ref={containerRef} className="mt-6 sm:mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 lg:gap-6">
-          {filtered.map((i, idx) => (
-            <article
-              key={i.id}
-              tabIndex={0}
-              aria-labelledby={`proj-${i.id}-title`}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") onOpen(i);
-              }}
-              className={`card-glass flex flex-col h-full rounded-xl sm:rounded-2xl p-4 sm:p-5 lg:p-6 focus:outline-none focus:ring-4 focus:ring-blue-500/30 transform transition-all duration-500 hover:scale-[1.02] ${
-                reveal ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
-              }`}
-              style={{ transitionDelay: `${idx * 60}ms` }}
-            >
-              {/* Top meta (domain and optional right-side small tag) */}
-              <div className="flex items-start justify-between gap-2 sm:gap-4">
-                <div className="domain-badge text-xs px-2 py-1.5 font-bold rounded-lg flex-shrink-0">{i.domain}</div>
-                {i.level && <div className="text-xs py-1 font-bold text-slate-400 flex-shrink-0">{i.level}</div>}
-              </div>
-
-              {/* Body: title, company, description, tags */}
-              <div className="flex-1 flex flex-col mt-3">
-                <h4 id={`proj-${i.id}-id`} className="font-semibold text-base sm:text-lg bg-gradient-to-r from-blue-500 to-violet-600 bg-clip-text text-transparent leading-tight">
-                  <Highlight text={i.id} />
-                </h4>
-                <h4 id={`proj-${i.id}-title`} className="font-semibold text-base sm:text-lg text-slate-900 leading-tight mt-1">
-                  <Highlight text={i.title} />
-                </h4>
-                <div className="text-xs sm:text-sm text-slate-500 mt-1">
-                  <Highlight text={` ${i.location || "Remote"}`} />
-                </div>
-
-                {/* description (clamped) */}
-                <p className="mt-3 sm:mt-4 text-slate-600 text-xs sm:text-sm description">
-                  <Highlight text={i.excerpt || i.description || ""} />
-                </p>
-
-                {/* tags - fixed area */}
-                <div className="mt-3 sm:mt-1 tags-row">
-                  <div className="flex flex-wrap gap-1">
-                    {(i.tags || []).slice(0, 12).map((t) => (
-                      <span key={t} className="tag-glass text-xs px-2 py-0.5 rounded-full">
-                        {t}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </div>
-
-              {/* Footer: meta + buttons (bottom aligned) */}
-              <div className="mt-4 sm:mt-6 pt-3 flex items-center justify-center sm:justify-start gap-3 sm:gap-4">
-                <div className="flex items-center gap-2 sm:gap-3 w-full sm:w-auto">
-                  {/* Details - primary gradient button */}
-                  <button
-                    onClick={() => onOpen(i)}
-                    className="button-gradient flex-1 sm:flex-initial sm:w-28 lg:w-32 h-10 sm:h-11 rounded-full inline-flex items-center justify-center text-white font-semibold text-sm sm:text-base transform transition hover:scale-105"
-                    aria-label={`Details for ${i.title}`}
-                  >
-                    Details
-                  </button>
-
-                  {/* Apply - secondary glass button with same size */}
-                  <a
-                    href="https://forms.gle/GxK7AeTZRGNw1NSV7"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="button-glass flex-1 sm:flex-initial sm:w-28 lg:w-32 h-10 sm:h-11 rounded-full inline-flex items-center justify-center font-medium text-sm sm:text-base transform transition hover:scale-105"
-                    aria-label={`Apply to ${i.title}`}
-                  >
-                    Apply
-                  </a>
-                </div>
-              </div>
-            </article>
-          ))}
-        </div>
-
-        {filtered.length === 0 && (
-          <div className="mt-8 text-slate-500 text-sm sm:text-base text-center sm:text-left">No internships found. Try a different search or clear filters.</div>
-        )}
+      <div className="relative flex items-center justify-between gap-3">
+        <span className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[11px] font-semibold" style={{ background: `${c}14`, color: c }}>
+          <Icon name={DOMAINS[item.domain]?.icon} size={13} stroke={2.2} />
+          {item.domain}
+        </span>
+        <span className="text-[11px] font-medium text-slate-400">{item.level}</span>
       </div>
 
-      {/* Local styles to enforce consistent heights, clamps, and glass look */}
-      <style>{`
-        /* description clamp to 3 lines and fixed height to preserve card consistency */
-        .description {
-          display: -webkit-box;
-          -webkit-line-clamp: 3;
-          -webkit-box-orient: vertical;
-          overflow: hidden;
-          min-height: 60px;
-          max-height: 60px;
-        }
+      <div className="relative mt-5 font-mono text-xs font-semibold tracking-wider" style={{ color: c }}>
+        <Highlight text={item.id} query={query} />
+      </div>
+      <h3 className="relative mt-1.5 font-display text-lg font-semibold leading-snug text-ink">
+        <button onClick={() => onOpen(item)} className="text-left after:absolute after:inset-0 focus:outline-none">
+          <Highlight text={item.title} query={query} />
+        </button>
+      </h3>
+      <p className="line-clamp-3 relative mt-3 text-sm leading-relaxed text-slate-600">
+        <Highlight text={item.excerpt || ""} query={query} />
+      </p>
 
-        @media (min-width: 640px) {
-          .description {
-            min-height: 72px;
-            max-height: 72px;
-          }
-        }
+      <div className="relative mt-5 flex flex-wrap gap-1.5">
+        {tags.slice(0, 4).map((t) => (
+          <span key={t} className="chip">{t}</span>
+        ))}
+        {tags.length > 4 && <span className="chip !bg-white">+{tags.length - 4}</span>}
+      </div>
 
-        /* tags area fixed height (prevents long tag lists from pushing footer) */
-        .tags-row {
-          min-height: 48px;
-          max-height: 48px;
-          overflow: hidden;
-        }
+      <div className="flex-1 min-h-6" />
+      <div className="relative z-10 flex items-center justify-between gap-3 border-t border-slate-100 pt-5">
+        <button onClick={() => onOpen(item)} className="inline-flex items-center gap-1.5 text-sm font-semibold text-ink transition group-hover:gap-2.5" style={{ color: c }}>
+          View details <Icon name="arrow" size={16} />
+        </button>
+        <a href={FORM_URL} target="_blank" rel="noopener noreferrer" className="rounded-full border border-slate-200 px-4 py-1.5 text-xs font-semibold text-slate-700 transition hover:border-transparent hover:text-white" style={{ "--c": c }}
+          onMouseEnter={(e) => (e.currentTarget.style.background = c)} onMouseLeave={(e) => (e.currentTarget.style.background = "")}>
+          Apply
+        </a>
+      </div>
+    </article>
+  );
+}
 
-        @media (min-width: 640px) {
-          .tags-row {
-            min-height: 56px;
-            max-height: 56px;
-          }
-        }
+export default function Projects({ internships = [], onOpen, domain, setDomain }) {
+  const [query, setQuery] = useState("");
+  const q = query.trim();
 
-        /* Apple Glass Deadline Badge */
-        .deadline-glass {
-          position: relative;
-          overflow: hidden;
-          padding: 0.625rem 1rem;
-          border-radius: 0.75rem;
-          backdrop-filter: blur(20px) saturate(180%);
-          -webkit-backdrop-filter: blur(20px) saturate(180%);
-          background: linear-gradient(135deg, rgba(255,245,245,0.9) 0%, rgba(254,242,242,0.8) 100%);
-          border: 1px solid rgba(239,68,68,0.2);
-          box-shadow: 
-            0 8px 32px 0 rgba(239,68,68,0.18),
-            inset 0 1px 0 0 rgba(255,255,255,0.6),
-            inset 0 -1px 0 0 rgba(239,68,68,0.1);
-        }
+  const counts = useMemo(() => {
+    const c = { All: internships.length };
+    internships.forEach((i) => (c[i.domain] = (c[i.domain] || 0) + 1));
+    return c;
+  }, [internships]);
+  const tabs = ["All", ...Object.keys(DOMAINS).filter((d) => counts[d])];
 
-        @media (min-width: 640px) {
-          .deadline-glass {
-            padding: 0.75rem 1.5rem;
-            border-radius: 1rem;
-          }
-        }
+  const filtered = useMemo(() => {
+    const ql = q.toLowerCase();
+    return internships.filter((i) => {
+      const okDomain = domain === "All" || i.domain === domain;
+      const hay = [i.id, i.title, i.excerpt, i.domain, i.subdomain, (i.tags || []).join(" ")].join(" ").toLowerCase();
+      return okDomain && (!ql || hay.includes(ql));
+    });
+  }, [internships, domain, q]);
 
-        /* Search & Select Glass */
-        .search-glass, .select-glass {
-          backdrop-filter: blur(20px) saturate(180%);
-          -webkit-backdrop-filter: blur(20px) saturate(180%);
-          background: rgba(255,255,255,0.7);
-          border: 1px solid rgba(15,23,42,0.08);
-          box-shadow: 
-            0 4px 20px rgba(2,6,23,0.06),
-            inset 0 1px 0 0 rgba(255,255,255,0.8);
-        }
+  return (
+    <section id="catalog" className="relative bg-white py-24 sm:py-32">
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent" />
+      <div className="container-x">
+        <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
+          <Reveal>
+            <span className="eyebrow"><span className="h-px w-6 bg-pura" />The projects</span>
+            <h2 className="h-section mt-4">
+              {internships.length} projects. <span className="text-grad">One team.</span>
+            </h2>
+            <p className="mt-4 max-w-xl text-slate-600">
+              Pick the project that fits you. Every one ships something real, with a dedicated supervisor and clear milestones.
+            </p>
+          </Reveal>
+          <Reveal delay={100}>
+            <div className="inline-flex items-center gap-2 rounded-full border border-amber-200 bg-amber-50 px-4 py-2 text-sm font-medium text-amber-800">
+              <Icon name="calendar" size={16} /> Deadline: {DEADLINE_LABEL}
+            </div>
+          </Reveal>
+        </div>
 
-        .search-glass::placeholder {
-          color: rgba(100,116,139,0.6);
-        }
+        {/* Controls */}
+        <div className="sticky top-[84px] z-30 -mx-4 mt-10 px-4 py-3 sm:top-[92px] sm:mx-0 sm:px-0">
+          <div className="flex flex-col gap-3 rounded-2xl border border-slate-200 bg-white/85 p-2 shadow-[0_10px_40px_-20px_rgba(10,22,40,0.3)] backdrop-blur-xl lg:flex-row lg:items-center">
+            <div className="flex gap-1 overflow-x-auto" role="tablist" aria-label="Filter by domain">
+              {tabs.map((t) => {
+                const active = domain === t;
+                const c = t === "All" ? "#0A1628" : domainColor(t);
+                return (
+                  <button
+                    key={t}
+                    role="tab"
+                    aria-selected={active}
+                    onClick={() => setDomain(t)}
+                    className={`flex shrink-0 items-center gap-2 rounded-xl px-3.5 py-2 text-sm font-medium transition-all ${active ? "text-white shadow-md" : "text-slate-600 hover:bg-slate-100"}`}
+                    style={active ? { background: c } : undefined}
+                  >
+                    {t !== "All" && <span className="h-2 w-2 rounded-full" style={{ background: active ? "#fff" : c }} />}
+                    {t}
+                    <span className={`rounded-md px-1.5 text-[11px] font-semibold ${active ? "bg-white/20" : "bg-slate-100 text-slate-500"}`}>{counts[t]}</span>
+                  </button>
+                );
+              })}
+            </div>
+            <label className="relative flex-1 lg:ml-auto lg:max-w-xs">
+              <span className="sr-only">Search projects</span>
+              <Icon name="search" size={17} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
+              <input
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder="Search skills, tools, codes…"
+                className="w-full rounded-xl border border-slate-200 bg-slate-50 py-2.5 pl-10 pr-9 text-sm outline-none transition focus:border-sky-300 focus:bg-white focus:ring-4 focus:ring-sky-100"
+              />
+              {query && (
+                <button onClick={() => setQuery("")} className="absolute right-2.5 top-1/2 -translate-y-1/2 rounded-md p-1 text-slate-400 hover:bg-slate-100 hover:text-slate-600" aria-label="Clear search">
+                  <Icon name="close" size={14} />
+                </button>
+              )}
+            </label>
+          </div>
+        </div>
 
-        /* Domain Chips Glass */
-        .chip-glass {
-          backdrop-filter: blur(12px) saturate(160%);
-          -webkit-backdrop-filter: blur(12px) saturate(160%);
-          background: rgba(255,255,255,0.6);
-          border: 1px solid rgba(15,23,42,0.06);
-          color: #475569;
-          box-shadow: 0 2px 12px rgba(2,6,23,0.04);
-        }
+        <p className="mt-4 text-sm text-slate-500" aria-live="polite">
+          Showing <span className="font-semibold text-ink">{filtered.length}</span> of {internships.length} projects
+        </p>
 
-        .chip-active {
-          background: linear-gradient(135deg, rgba(59,130,246,0.95) 0%, rgba(139,92,246,0.95) 100%);
-          color: white;
-          border-color: rgba(59,130,246,0.3);
-          box-shadow: 
-            0 4px 20px rgba(59,130,246,0.3),
-            inset 0 1px 0 0 rgba(255,255,255,0.3);
-        }
-
-        /* Card Glass */
-        .card-glass {
-          backdrop-filter: blur(16px) saturate(180%);
-          -webkit-backdrop-filter: blur(16px) saturate(180%);
-          background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(250,250,251,0.9) 100%);
-          border: 1px solid rgba(15,23,42,0.06);
-          box-shadow: 
-            0 10px 40px rgba(2,6,23,0.08),
-            inset 0 1px 0 0 rgba(255,255,255,0.9);
-        }
-
-        .card-glass:hover {
-          box-shadow: 
-            0 20px 60px rgba(2,6,23,0.12),
-            inset 0 1px 0 0 rgba(255,255,255,0.9);
-        }
-
-        /* Domain Badge Glass */
-        .domain-badge {
-          backdrop-filter: blur(8px) saturate(150%);
-          -webkit-backdrop-filter: blur(8px) saturate(150%);
-          background: rgba(241,245,249,0.8);
-          color: #475569;
-          border: 1px solid rgba(15,23,42,0.04);
-          box-shadow: 0 2px 8px rgba(2,6,23,0.04);
-        }
-
-        /* Tag Glass */
-        .tag-glass {
-          backdrop-filter: blur(8px);
-          -webkit-backdrop-filter: blur(8px);
-          background: rgba(241,245,249,0.7);
-          color: #475569;
-          border: 1px solid rgba(15,23,42,0.04);
-        }
-
-        /* Gradient Button */
-        .button-gradient {
-          background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
-          box-shadow: 
-            0 8px 28px rgba(59,130,246,0.25),
-            inset 0 1px 0 0 rgba(255,255,255,0.3);
-        }
-
-        .button-gradient:hover {
-          box-shadow: 
-            0 12px 36px rgba(59,130,246,0.35),
-            inset 0 1px 0 0 rgba(255,255,255,0.3);
-        }
-
-        /* Glass Button */
-        .button-glass {
-          backdrop-filter: blur(12px) saturate(180%);
-          -webkit-backdrop-filter: blur(12px) saturate(180%);
-          background: rgba(255,255,255,0.8);
-          border: 1px solid rgba(15,23,42,0.08);
-          color: #1e293b;
-          box-shadow: 
-            0 6px 20px rgba(2,6,23,0.08),
-            inset 0 1px 0 0 rgba(255,255,255,0.9);
-        }
-
-        .button-glass:hover {
-          background: rgba(255,255,255,0.95);
-          box-shadow: 
-            0 8px 28px rgba(2,6,23,0.12),
-            inset 0 1px 0 0 rgba(255,255,255,0.9);
-        }
-      `}</style>
+        {filtered.length ? (
+          <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {filtered.map((item, i) => (
+              <Reveal key={item.id} delay={(i % 3) * 80} className="h-full">
+                <Card item={item} query={q} onOpen={onOpen} />
+              </Reveal>
+            ))}
+          </div>
+        ) : (
+          <div className="mt-6 rounded-3xl border border-dashed border-slate-300 py-16 text-center">
+            <div className="font-display text-lg font-semibold text-ink">No project matches “{q}”</div>
+            <p className="mt-1 text-sm text-slate-500">Try another keyword or show all domains.</p>
+            <button onClick={() => { setQuery(""); setDomain("All"); }} className="btn-ghost mt-5">Clear filters</button>
+          </div>
+        )}
+      </div>
     </section>
   );
 }
