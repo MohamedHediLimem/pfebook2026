@@ -3,8 +3,8 @@
 export const FORM_URL = "https://forms.gle/i9htSti5wpC15FPh8";
 export const EMAIL = "purasolutions.careerservices@outlook.com";
 export const WEBSITE = "https://pura-tech.com";
-export const DEADLINE_ISO = "2026-12-20T23:59:00+01:00"; // Africa/Tunis
-export const DEADLINE_LABEL = "December 20th, 2026 · 11:59 PM";
+export const DEADLINE_ISO = "2026-12-09T23:59:00+01:00"; // Africa/Tunis
+export const DEADLINE_LABEL = "December 9th, 2026 · 11:59 PM";
 export const START_LABEL = "February 2027";
 
 // Same colours as the PDF book
