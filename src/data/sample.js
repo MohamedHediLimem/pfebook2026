@@ -6,7 +6,7 @@ const SAMPLE_INTERNSHIPS = [
     "company": "Pura Solutions",
     "domain": "Quality Management",
     "subdomain": "AI Quality & Validation",
-    "location": "On site",
+    "location": "On site / Hybrid",
     "duration": "4–6 months",
     "level": "Engineering / Master",
     "tags": [
@@ -35,7 +35,7 @@ const SAMPLE_INTERNSHIPS = [
     "company": "Pura Solutions",
     "domain": "Quality Management",
     "subdomain": "Regulatory Intelligence",
-    "location": "On site",
+    "location": "On site / Hybrid",
     "duration": "4–6 months",
     "level": "Engineering / Master",
     "tags": [
@@ -64,7 +64,7 @@ const SAMPLE_INTERNSHIPS = [
     "company": "Pura Solutions",
     "domain": "Quality Management",
     "subdomain": "ISO / AI Governance",
-    "location": "On site",
+    "location": "On site / Hybrid",
     "duration": "4–6 months",
     "level": "Engineering / Master",
     "tags": [
@@ -93,7 +93,7 @@ const SAMPLE_INTERNSHIPS = [
     "company": "Pura Solutions",
     "domain": "Quality Management",
     "subdomain": "ISO / Information Security",
-    "location": "On site",
+    "location": "On site / Hybrid",
     "duration": "4–6 months",
     "level": "Engineering / Master",
     "tags": [
@@ -122,7 +122,7 @@ const SAMPLE_INTERNSHIPS = [
     "company": "Pura Solutions",
     "domain": "Quality Management",
     "subdomain": "ISO / Quality",
-    "location": "On site",
+    "location": "On site / Hybrid",
     "duration": "4–6 months",
     "level": "Engineering / Master",
     "tags": [
@@ -151,7 +151,7 @@ const SAMPLE_INTERNSHIPS = [
     "company": "Pura Solutions",
     "domain": "Information Technology",
     "subdomain": "Full-Stack Development",
-    "location": "On site",
+    "location": "On site / Hybrid",
     "duration": "4–6 months",
     "level": "Engineering",
     "tags": [
@@ -181,7 +181,7 @@ const SAMPLE_INTERNSHIPS = [
     "company": "Pura Solutions",
     "domain": "Information Technology",
     "subdomain": "Quality Assurance & Test Automation",
-    "location": "On site",
+    "location": "On site / Hybrid",
     "duration": "4–6 months",
     "level": "Engineering / Bachelor",
     "tags": [
@@ -210,7 +210,7 @@ const SAMPLE_INTERNSHIPS = [
     "company": "Pura Solutions",
     "domain": "Information Technology",
     "subdomain": "Cybersecurity & DevOps",
-    "location": "On site",
+    "location": "On site / Hybrid",
     "duration": "4–6 months",
     "level": "Engineering",
     "tags": [
@@ -240,7 +240,7 @@ const SAMPLE_INTERNSHIPS = [
     "company": "Pura Solutions",
     "domain": "Business Development",
     "subdomain": "Partnerships, Prospection & Onboarding",
-    "location": "On site",
+    "location": "On site / Hybrid",
     "duration": "4–6 months",
     "level": "Bachelor / Master",
     "tags": [
@@ -272,7 +272,7 @@ const SAMPLE_INTERNSHIPS = [
     "company": "Pura Solutions",
     "domain": "Bioinformatics",
     "subdomain": "Computational Biology",
-    "location": "On site",
+    "location": "On site / Hybrid",
     "duration": "4–6 months",
     "level": "Engineering / Master",
     "tags": [

@@ -6,6 +6,7 @@ export const WEBSITE = "https://pura-tech.com";
 export const DEADLINE_ISO = "2026-12-09T23:59:00+01:00"; // Africa/Tunis
 export const DEADLINE_LABEL = "December 9th, 2026 · 11:59 PM";
 export const START_LABEL = "February 2027";
+export const LOCATION_LABEL = "On site / Hybrid";
 
 // Same colours as the PDF book
 export const DOMAINS = {

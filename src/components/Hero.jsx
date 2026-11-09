@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { DEADLINE_ISO, DEADLINE_LABEL, DOMAINS, FORM_URL, START_LABEL, TOPICS } from "../data/content";
+import { DEADLINE_ISO, DEADLINE_LABEL, DOMAINS, FORM_URL, LOCATION_LABEL, START_LABEL, TOPICS } from "../data/content";
 import { Icon } from "./ui";
 
 const pad = (n) => String(n).padStart(2, "0");
@@ -69,7 +69,7 @@ export default function Hero({ internships = [], onPickDomain }) {
             {[
               ["Start", START_LABEL],
               ["Duration", "4–6 months"],
-              ["Location", "On site"],
+              ["Location", LOCATION_LABEL],
             ].map(([k, v]) => (
               <div key={k}>
                 <dt className="text-[11px] uppercase tracking-[0.16em] text-white/45">{k}</dt>
