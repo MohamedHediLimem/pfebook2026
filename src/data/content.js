@@ -64,7 +64,7 @@ export const VALUES = [
 
 export const STEPS = [
   ["Choose your project", "Note its code, for example PFE-27-DEV1. You can pick up to two."],
-  ["Prepare your file", "CV, a short motivation letter and your latest transcript."],
+  ["Prepare your file", "An ATS-compliant CV (resume)."],
   ["Apply", "Fill in the application form before the deadline."],
   ["Interview", "A technical or case interview with the project supervisor."],
   ["Welcome on board", "Internship agreement, onboarding pack and start in February 2027."],

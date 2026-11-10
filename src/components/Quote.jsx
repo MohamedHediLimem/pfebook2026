@@ -50,6 +50,9 @@ export default function Quote() {
                 </li>
               ))}
             </ol>
+            <p className="mt-6 rounded-2xl border border-pura-sun/40 bg-pura-sun/10 px-4 py-3 text-sm text-white/80">
+              We only accept <span className="font-semibold text-pura-sun">ATS-compliant CVs (resumes)</span>: a simple, text-based PDF with no tables, columns or images.
+            </p>
           </Reveal>
         </div>
       </div>

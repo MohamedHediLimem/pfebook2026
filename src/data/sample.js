@@ -206,32 +206,33 @@ const SAMPLE_INTERNSHIPS = [
   },
   {
     "id": "PFE-27-SEC1",
-    "title": "Cybersecurity & DevSecOps for a Multi-Tenant AI SaaS Platform",
+    "title": "Security Audit, DevOps & Infrastructure Automation for an AI SaaS Platform",
     "company": "Pura Solutions",
     "domain": "Information Technology",
-    "subdomain": "Cybersecurity & DevOps",
+    "subdomain": "Cybersecurity, DevOps & Infrastructure",
     "location": "On site / Hybrid",
     "duration": "4–6 months",
     "level": "Engineering",
     "tags": [
       "Cybersecurity",
+      "Automation",
+      "Infrastructure",
+      "DevOps",
+      "Audit",
       "DevSecOps",
-      "Cloud",
-      "OWASP",
-      "Kubernetes",
-      "Backup & DR",
-      "LLM Security"
+      "Infrastructure as Code",
+      "Kubernetes"
     ],
-    "excerpt": "Harden a multi-tenant AI SaaS platform, build security into the delivery pipeline, and make backups, logs and recovery provable.",
-    "Objectives": "<p>Our customers trust us with their official quality records and product files, so security is part of the product. The platform is a set of containerised microservices behind an API gateway, with PostgreSQL, object storage, queues and an AI service calling external language models. You will implement and test the technical controls, working with the ISO/IEC 27001 intern who builds the management system around them.</p><ul><li>Threat-model the platform (STRIDE) and verify it against OWASP ASVS: authentication, sessions, RBAC and tenant isolation.</li><li>Build DevSecOps into CI/CD: SAST, dependency (SCA) and secret scanning, container image scanning, signed images, SBOM.</li><li>Harden infrastructure and containers; move secrets to a vault; apply least privilege for services and people.</li><li>Set up automated, encrypted, off-site backups and a disaster-recovery plan with tested restores (RPO / RTO).</li><li>Deploy centralised logging, monitoring and alerting with tamper-evident audit logs; secure the AI layer (OWASP Top 10 for LLMs).</li></ul>",
-    "Scope": "<p><strong>In scope</strong></p><ul><li>Gateway, microservices, databases, storage, AI service</li><li>CI/CD pipelines and container platform</li><li>Logging, monitoring, backup and recovery</li></ul><p><strong>Out of scope</strong></p><ul><li>Writing ISMS policies (ISO 27001 intern)</li><li>Product feature development</li></ul><p><strong>Methods &amp; tools</strong></p><p>OWASP ASVS, STRIDE, Docker, Kubernetes / Helm, GitHub Actions, Trivy, Semgrep, Vault, Prometheus / Grafana</p><p><strong>Your profile</strong></p><ul><li>Final-year engineering, security / networks / cloud</li><li>Linux, Docker and CI/CD; web security fundamentals</li><li>Rigorous, documents everything</li></ul>",
+    "excerpt": "Audit the platform's security, automate its infrastructure and delivery pipeline, and turn every control into continuous, provable evidence.",
+    "Objectives": "<p>Manufacturers trust our AI-powered compliance and quality management SaaS platform with their official quality records and product files, so security is part of the product. The platform runs as containerised microservices behind an API gateway, with PostgreSQL, object storage, queues and an AI service calling external language models. You will audit its security, automate how its infrastructure is built and shipped, and make every control provable, working with the ISO/IEC 27001 intern who builds the management system around them.</p><ul><li>Audit the platform&#x27;s security: STRIDE threat model, OWASP ASVS and LLM Top 10 review, CIS benchmarks on hosts and containers.</li><li>Turn every audit finding into a prioritised remediation plan and track it to verified closure with the developers.</li><li>Automate the infrastructure as code (Terraform, Ansible): reproducible, hardened environments, secrets in a vault, least privilege.</li><li>Build DevSecOps into CI/CD: SAST, dependency, secret and image scanning, signed images, SBOM and blocking security gates.</li><li>Automate encrypted off-site backups with tested restores (RPO / RTO), plus centralised logging, alerting and tamper-evident audit logs.</li></ul>",
+    "Scope": "<p><strong>In scope</strong></p><ul><li>Gateway, microservices, databases, storage and AI service</li><li>Cloud infrastructure, CI/CD pipelines and container platform</li><li>Security audit, monitoring, backup and recovery</li></ul><p><strong>Out of scope</strong></p><ul><li>Writing ISMS policies (ISO 27001 intern)</li><li>Product feature development</li></ul><p><strong>Methods &amp; tools</strong></p><p>OWASP ASVS, STRIDE, CIS Benchmarks, Terraform / Ansible, Docker, Kubernetes / Helm, GitHub Actions, Trivy / Semgrep, Vault, Prometheus / Grafana</p><p><strong>Your profile</strong></p><ul><li>Final-year engineering, security / networks / cloud</li><li>Linux, Docker, CI/CD and scripting (Bash or Python)</li><li>Auditor&#x27;s rigour, documents everything</li></ul>",
     "Delivrables": [
-      "Threat model and ASVS verification report",
-      "Secure CI/CD pipeline with security gates",
-      "Hardened containers and secrets management",
-      "Backup and disaster-recovery plan with restore-test evidence",
-      "Observability stack with security alerts",
-      "Incident-response runbooks"
+      "Security audit report (threat model, ASVS, CIS) and remediation plan",
+      "Infrastructure as code for every environment",
+      "Automated CI/CD pipeline with security gates",
+      "Automated backup and disaster-recovery plan with restore-test evidence",
+      "Observability stack with security alerts and audit logs",
+      "Incident-response runbooks and continuous-audit dashboard"
     ]
   },
   {
